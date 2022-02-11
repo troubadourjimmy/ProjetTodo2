@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-item lines = "none">
+      <ion-label style="font-weight: 800;font-size: 20px">
+         Ajouter une nouvelle List
+      </ion-label> 
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="listForm">
+    <ion-item>
+      <ion-label position = "stacked">Name</ion-label>
+      <!-- formControlName = "name"，‘name’ as the same as this.fb.group({name: ['',[Validators.required,Validators.min(3)]]}) -->
+      <ion-input formControlName = "name"></ion-input>
+    </ion-item>
+    <ion-button [disabled]="listForm.invalid" expand="block" type="submit" (click)="addList()">Validate</ion-button>
+  </form>
+
+
+</ion-content>
+

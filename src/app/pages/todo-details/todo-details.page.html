@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-item lines = "none">
+      <ion-label style="font-weight: 800;font-size: 20px">
+         Todo-Detaille
+      </ion-label> 
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="container">   
+      <ion-item>
+        <ion-label position = "stacked">Name :</ion-label>
+        <ion-text>{{todo.name}}</ion-text> 
+        
+      </ion-item>     
+
+      <ion-item>
+        <ion-label position = "stacked">Description:</ion-label>
+        <ion-text>{{todo.descrip}}</ion-text>         
+      </ion-item> 
+      
+      <ion-item>
+        <ion-label position = "stacked">Have done:</ion-label>
+        <ion-checkbox checked={{todo.status}} disabled="false" [(ngModel)]="todo.status" solt="end"></ion-checkbox>        
+      </ion-item>     
+  </div>
+
+  <ion-button expand="block" (click) = "modifiTodo()"  >Modification</ion-button>
+</ion-content>
