@@ -32,3 +32,8 @@ src/environments/
 /plugins
 /www
 /.angular
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json
