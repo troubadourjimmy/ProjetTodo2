@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
 
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
+    //les utilisateurs non authentifiés ne sont pas autorisés à naviguer vers homepage
+    canActivate: [AngularFireAuthGuard]
   },
   {
     //pour aller au homepage
@@ -14,7 +17,8 @@ const routes: Routes = [
   },
   {
     path: 'list-details/:listId',
-    loadChildren: () => import('./pages/list-details/list-details.module').then( m => m.ListDetailsPageModule)
+    loadChildren: () => import('./pages/list-details/list-details.module').then( m => m.ListDetailsPageModule),
+    canActivate: [AngularFireAuthGuard] 
   },
   {
     path: 'list-details/:listId/todo-details/:todoId',
