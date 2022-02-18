@@ -9,19 +9,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CreateTodoComponent } from './modals/create-todo/create-todo.component';
 import { ModifiTodoComponent } from './modals/modifi-todo/modifi-todo.component';
-import { environment } from 'src/environments/environment';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { provideStorage,getStorage } from '@angular/fire/storage';
+import { environment } from 'src/environments/environment.prod';
 
 @NgModule({
   declarations: [AppComponent,CreateTodoComponent,ModifiTodoComponent],
   entryComponents: [],
-  imports: [BrowserModule, 
-            IonicModule.forRoot(), 
-            AppRoutingModule,
-            ReactiveFormsModule,
-            // AngularFireModule.initializeApp(environment.firebase),
-            // AngularFireAnalyticsModule,
-            // AngularFirestoreModule
-          ],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,ReactiveFormsModule, provideFirebaseApp(() => initializeApp(environment.firebase)), provideAuth(() => getAuth()), provideFirestore(() => getFirestore()), provideStorage(() => getStorage())],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
