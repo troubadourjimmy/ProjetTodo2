@@ -10,7 +10,7 @@ const routes: Routes = [
     canActivate: [AngularFireAuthGuard]
   },
   {
-    //pour aller au homepage
+    //pour aller au page login comme le premier page lorsque entrer le app
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
