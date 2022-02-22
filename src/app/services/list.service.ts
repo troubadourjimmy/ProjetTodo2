@@ -7,8 +7,7 @@ import { Todo } from '../models/todo';
 @Injectable({
   providedIn: 'root'
 })
-export class ListService 
-{
+export class ListService {
   Lists:List[];
  
   // Todo1: Todo = {name:'manger', descrip: 'prepar du riz',status:false};
@@ -50,42 +49,35 @@ export class ListService
 
   // ];
 
-  constructor() 
-  { 
+  constructor() {
       this.Lists=[];
   }
 
-  getLists():List[]
-  {
+  getLists():List[] {
     return this.Lists;
   }
 
   //trouver le list choist
-  getOne(id:string):List
-  {
+  getOne(id:string):List {
     return this.Lists.find(element=>element.id === id);
   }
 
   //creer une nouvelle list 
-  addList(list:List)
-  {
+  addList(list:List) {
     this.Lists.push(list);
   }
 
   //creer une nouvelle todo dans un list chosie
-  addTodo(id:string,todo:Todo)
-  {
+  addTodo(id:string,todo:Todo) {
     this.getOne(id).item.push(todo);
   }
 
-  deleteTodo(todo:Todo[],index:number)
-  {
+  deleteTodo(todo:Todo[],index:number) {
     todo.splice(index,1);
   }
 
   //trouver un todo chosit dans un list
-  getTodo(listId:string, todoId:string):Todo
-  {
+  getTodo(listId:string, todoId:string):Todo {
      return this.getOne(listId).item.find(element=>element.id === todoId);
   }
 

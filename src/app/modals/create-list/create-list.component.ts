@@ -14,29 +14,24 @@ export class CreateListComponent implements OnInit {
 
   listForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private listService: ListService,public modalCtrl:ModalController) 
-  {
+  constructor(private fb: FormBuilder,
+              private listService: ListService,
+              public modalCtrl:ModalController) {
       this.listForm = this.fb.group({name: ['',[Validators.required,Validators.minLength(3)]],});
   }
 
-  ngOnInit() 
-  {
-    this.listForm = this.fb.group(
-      {
+  ngOnInit() {
+    this.listForm = this.fb.group({
         name: ['',Validators.required]
       }
-    )
+    );
   }
 
-  addList()
-  {
-    if(this.listForm.valid)
-    {
+  addList() {
+    if(this.listForm.valid) {
       this.listService.addList(new List(this.listForm.get('name').value));
       this.modalCtrl.dismiss();  
     }
-     
-    
   }
 
 }

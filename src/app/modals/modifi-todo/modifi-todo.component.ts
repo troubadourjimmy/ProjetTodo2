@@ -15,21 +15,20 @@ export class ModifiTodoComponent implements OnInit {
 
 
   ModiTodoForm: FormGroup;
-  constructor(private fb:FormBuilder, private listeService:ListService, private modalContrl:ModalController){}
+  constructor(private fb:FormBuilder,
+              private listeService:ListService,
+              private modalContrl:ModalController){}
 
-  ngOnInit() 
-  {
+  ngOnInit() {
     //afficher le todo pour modifier
-    this.ModiTodoForm = this.fb.group
-    ({
+    this.ModiTodoForm = this.fb.group({
         name: [this.listeService.getTodo(this.listId,this.todoId).name,[Validators.required,Validators.minLength(3)]],
         descrip: [this.listeService.getTodo(this.listId,this.todoId).descrip,[Validators.required,Validators.maxLength(150)]]
-    })
+    });
   }
 
   //modifier le todo et verifier
-  verifiModification()
-  {
+  verifiModification() {
     this.listeService.getTodo(this.listId,this.todoId).name =this.ModiTodoForm.get("name").value;
     this.listeService.getTodo(this.listId,this.todoId).descrip =this.ModiTodoForm.get("descrip").value;
     

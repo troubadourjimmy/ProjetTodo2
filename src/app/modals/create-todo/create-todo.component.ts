@@ -14,26 +14,25 @@ export class CreateTodoComponent implements OnInit {
   @Input() listId:string;
   todoForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private listService: ListService, private modalCtrl:ModalController) 
-  {
+  constructor(private fb: FormBuilder,
+              private listService: ListService,
+              private modalCtrl:ModalController) {
     this.todoForm = this.fb.group({
               name: ['',[Validators.required,Validators.minLength(3)]],
               descrip: ['',[Validators.required,Validators.maxLength(150)]]
-            })
+            });
   }
 
   ngOnInit() {}
 
 
-  addTodo()
-  {
-      if(this.todoForm.valid)
-      {
+  addTodo() {
+      if(this.todoForm.valid) {
         this.listService.addTodo(this.listId ,
                                 new Todo( this.todoForm.get("name").value,this.todoForm .get("descrip").value)
                                 );
         this.modalCtrl.dismiss();
-      } ; 
+      };
        
   }
 

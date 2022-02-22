@@ -18,21 +18,17 @@ export class ListDetailsPage implements OnInit {
   // Todo1: Todo = {name:'manger', descrip: 'prepar du riz',status:false};
 
 
-  constructor( 
-              private modalCtrl:ModalController,
+  constructor(private modalCtrl:ModalController,
               private listeService:ListService,
-              private actRou:ActivatedRoute) 
-  { } 
+              private actRou:ActivatedRoute) {}
 
-  ngOnInit() 
-  {
+  ngOnInit() {
     //  this.stockList=this.routeInfo.snapshot.queryParams['list'];
     //  this.Todos = this.stockList.item;
     //  console.log(this.stockList.name);
     //Obtenir le paramètre de routage listId
     const listId=this.actRou.snapshot.paramMap.get('listId');
     this.list=this.listeService.getOne(listId);
-     
   }
 
   //erreur
@@ -40,23 +36,19 @@ export class ListDetailsPage implements OnInit {
   // {
   //     this.list.item.splice(index,1);
   // }
-  deleteTodo(index)
-  {
+  deleteTodo(index) {
     this.listeService.deleteTodo(this.list.item,index);
   }
 
-  async addNewTodo()
-  {
-    const modal = await this.modalCtrl.create
-    ({
+  async addNewTodo() {
+    const modal = await this.modalCtrl.create({
         component:CreateTodoComponent,
-        componentProps:
-        {
+        componentProps: {
           'listId' : this.list.id
         }
-    })
+    });
 
-    await modal.present()
+    await modal.present();
     
   }
   

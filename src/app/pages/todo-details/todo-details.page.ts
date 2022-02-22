@@ -29,17 +29,14 @@ export class TodoDetailsPage implements OnInit {
   }
 
   //ouvrir la page modification-todo
-  async modifiTodo()
-  {
-    const modal = await this.modalCtrl.create
-    ({
+  async modifiTodo() {
+    const modal = await this.modalCtrl.create({
         component:ModifiTodoComponent,
-        componentProps:
-        {
+        componentProps: {
           'listId':this.listid,
           'todoId' : this.todoid
         }
-    })
+    });
 
     await modal.present();
     

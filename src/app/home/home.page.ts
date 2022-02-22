@@ -18,27 +18,16 @@ export class HomePage implements OnInit {
      this.Lists = this.listService.getLists();
   }
 
-
-  delete(index)
-  {
+  delete(index){
       this.Lists.splice(index,1);
   }
 
-  getList(index)
-  {
-    console.log(index);
-    this.Lists = this.listService.getLists();
-    return this.Lists[index];
-  }
-
-  async addNewList()
-  {
-    const modal = await this.modalCtrl.create
-    ({
+  async addNewList() {
+    const modal = await this.modalCtrl.create({
         component:CreateListComponent
-    })
+    });
 
-    await modal.present()
+    await modal.present();
     this.Lists = this.listService.getLists();
   }
 

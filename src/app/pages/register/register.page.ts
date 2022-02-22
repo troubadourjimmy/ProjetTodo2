@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AutentifiService } from 'src/app/services/autentifi.service';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 
 @Component({
   selector: 'app-register',
@@ -10,27 +10,20 @@ import { AutentifiService } from 'src/app/services/autentifi.service';
 export class RegisterPage implements OnInit {
 
   registerForm: FormGroup;
-  constructor(private fb: FormBuilder, private authen:AutentifiService)
-  {
+  constructor(private fb: FormBuilder, private authen:AuthentificationService) {
 
     this.registerForm = this.fb.group({
       email: ['',[Validators.required,Validators.minLength(5)]],
       password: ['',[Validators.required,Validators.minLength(7)]]
       //repassword: ['',[Validators.required,Validators.minLength(7)]]
-      
-    })
-   }
-  ngOnInit() {
+    });
   }
+  ngOnInit() {}
 
-  signup()
-  { 
-  
-    if(this.registerForm.valid)
-    {
+  signup() {
+    if(this.registerForm.valid) {
         this.authen.createUser(this.registerForm.get("email").value, this.registerForm.get("password").value);
     }
-  
   }
 
 }

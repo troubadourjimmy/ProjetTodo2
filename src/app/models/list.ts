@@ -1,13 +1,11 @@
 import { Todo } from "./todo";
 
-export class List 
-{
+export class List {
     name:String;
     item:Todo[]|null;
     id : string;
 
-    constructor(name: string)
-    {
+    constructor(name: string) {
         this.name =name;
         this.item =[];
         //Les nombres générés par Math.random seront représentés sous forme de chaînes aléatoires
