@@ -15,27 +15,40 @@ export class AuthentificationService {
   constructor(private fireAuthen:AngularFireAuth,private route:Router) {}
 
    
-  loginWithEmail(email:string, password: string) {
+  // loginWithEmail(email:string, password: string) {
+  //   //methode example sur le lien https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth
+  //   //https://firebase.google.com/docs/auth/web/password-auth?hl=zh-cn#web-version-9_1
+  //   this.fireAuthen.signInWithEmailAndPassword(email, password).then((userCredential)=> {
+  //     var user = userCredential.user;
+  //     this.userData = userCredential;
+  //     console.log(userCredential)
+  //     //console.log(`user : ${user}`);
+  //     this.route.navigate(['home'])
+  //   }).catch(function(error) {
+  //     // Handle Errors here.
+  //     var errorCode = error.code;
+  //     var errorMessage = error.message;
+  //     if (errorCode === 'auth/wrong-password') {
+  //       alert('Wrong password.');
+  //     } else {
+  //       alert(errorMessage);
+  //     }
+  //     console.log(error);
+  //   });
+  // }
+
+  async loginWithEmail(email:string, password: string) {
     //methode example sur le lien https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth
     //https://firebase.google.com/docs/auth/web/password-auth?hl=zh-cn#web-version-9_1
-    this.fireAuthen.signInWithEmailAndPassword(email, password).then((userCredential)=> {
-      var user = userCredential.user;
-      this.userData = userCredential;
-      console.log(userCredential)
-      //console.log(`user : ${user}`);
-      this.route.navigate(['home'])
-    }).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      if (errorCode === 'auth/wrong-password') {
-        alert('Wrong password.');
-      } else {
-        alert(errorMessage);
-      }
-      console.log(error);
-    });
+    const userCred= await this.fireAuthen.signInWithEmailAndPassword(email, password);
+    return userCred;
   }
+
+
+
+
+
+
 
   // createUser(email:string, password: string) {
      
@@ -76,15 +89,6 @@ export class AuthentificationService {
   }
 
 
-  async sendEmailVerification() {
-    // [START auth_send_email_verification]
-    (await this.fireAuthen.currentUser).sendEmailVerification()
-      .then(() => {
-        // Email verification sent!
-        // ...
-      });
-    // [END auth_send_email_verification]
-  }
 
    
 

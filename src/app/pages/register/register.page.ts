@@ -29,8 +29,8 @@ export class RegisterPage implements OnInit {
     try{
         const UserCredential = await this.authen.createUser(this.registerForm.get("email").value, this.registerForm.get("password").value);
         console.log(UserCredential);
-        const toast = this.toastCtrl.create({
-          message: 'un email de verification deja envoye a vous,si il vous plaît vérifier votre e-mail',
+        const toast =await this.toastCtrl.create({
+          message: 'a verification email has already been sent to you, please verify your email',
           duration: 5000,
           position: 'middle',
           color:'light'
@@ -38,14 +38,30 @@ export class RegisterPage implements OnInit {
         (await toast).present();
         this.route.navigate(['login'])
     }catch(e){
-        const toast = this.toastCtrl.create({
-        message: e.message,
-        duration: 5000,
-        position: 'middle',
-        color:'danger'
-      });
-       (await toast).present();
+         var errorCode = e.code;
+         var errorMessage = e.message;
 
+         
+      if (errorCode == 'auth/weak-password') {
+          const toast = await this.toastCtrl.create({
+          message: "Password is too weak!",
+          duration: 5000,
+          position: 'middle',
+          color:'danger'
+        });
+        (await toast).present();
+
+      }else{
+        const toast = this.toastCtrl.create({
+          ///enlever la partie 'firebase:' dans le errorMessage
+          message: errorMessage.substr(10),
+          duration: 5000,
+          position: 'middle',
+          color:'danger'
+        });
+        (await toast).present();
+      }
+          
     }
 
   }
