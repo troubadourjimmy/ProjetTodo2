@@ -81,14 +81,18 @@ export class AuthentificationService {
 
   // }
   public async createUser(email: string, psw: string){
-    //Je renvoie la promise pour pouvoir l'utiliser dans la page "register"
+    
     const userCred = await this.fireAuthen.createUserWithEmailAndPassword(email, psw);
-    //Avant de connecter l'utilisateur on lui envoie le mail de verification et on attend qu'il ait validé son mail
     await userCred.user.sendEmailVerification();
     return userCred;
   }
 
-
+  signout()
+  {
+    this.fireAuthen.signOut();
+      
+      // Sign-out successful. 
+  }
 
    
 

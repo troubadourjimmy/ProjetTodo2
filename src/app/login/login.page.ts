@@ -14,6 +14,7 @@ export class LoginPage implements OnInit {
   loginForm: FormGroup;
   constructor(private fb: FormBuilder, 
               private authen:AuthentificationService,
+              //toast est une notification généralement
               private toastCtrl:ToastController,
               private route:Router) {
 
@@ -28,6 +29,7 @@ export class LoginPage implements OnInit {
   async login() {
     try{
       const userCrend= await this.authen.loginWithEmail(this.loginForm.get("email").value, this.loginForm.get("password").value);
+      console.log(userCrend);
       if(userCrend.user.emailVerified){
         const toast =await this.toastCtrl.create({
           message: 'connect successfully',
@@ -62,7 +64,7 @@ export class LoginPage implements OnInit {
 
       }else{
         const toast = this.toastCtrl.create({
-          //enlever la partie 'firebase:' dans le errorMessage
+          //enlever le mot 'firebase:' dans le errorMessage
           message: errorMessage.substr(10),
           duration: 5000,
           position: 'middle',
