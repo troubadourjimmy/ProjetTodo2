@@ -30,9 +30,6 @@ import { AngularFireModule } from '@angular/fire/compat';
             AngularFireModule.initializeApp(environment.firebase)      
             ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
-  bootstrap: [AppComponent],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

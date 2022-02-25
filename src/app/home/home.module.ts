@@ -16,9 +16,6 @@ import { CreateListComponent } from '../modals/create-list/create-list.component
     HomePageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [HomePage,CreateListComponent],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ]
+  declarations: [HomePage,CreateListComponent]
 })
 export class HomePageModule {}
