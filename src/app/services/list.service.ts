@@ -2,61 +2,31 @@ import { Injectable } from '@angular/core';
 import { element } from 'protractor';
 import { List } from '../models/list';
 import { Todo } from '../models/todo';
+import {Observable} from "rxjs";
+import * as Firestore from "@angular/fire/firestore";
 
-///////
 @Injectable({
   providedIn: 'root'
 })
 export class ListService {
   Lists:List[];
- 
-  // Todo1: Todo = {name:'manger', descrip: 'prepar du riz',status:false};
-  // Todo2: Todo = {name:'sport', descrip: 'faire du velo',status:false };
-  // Lists: List[] = 
-  //           [
-  //             {
-  //               name:'item1', 
-  //               item: [this.Todo1,this.Todo2]
-  //             },
+  items$: Firestore.CollectionReference<List>;
 
-  //             {
-  //               name:'item2', 
-  //               item: [this.Todo1, this.Todo2]
-  //             },
-
-  //             {
-  //               name:'item3', 
-  //               item: [this.Todo1, this.Todo2]
-  //             },
-
-  //             {
-  //               name:'item4', 
-  //               item: [this.Todo1, this.Todo2]
-  //             }
-  //         ];
-  // Lists = 
-  // [
-  //   {
-  //     itemName: 'item1'
-  //   },
-
-  //   {
-  //     itemName: 'item2'
-  //   },
-  //   {
-  //     itemName: 'item3'
-  //   }
-
-  // ];
 
   constructor() {
       this.Lists=[];
+      this.items$ = Firestore.collection(firestore,'playlists') as Firestore.CollectionReference<List>;
   }
 
   getLists():List[] {
     return this.Lists;
   }
+/*
+  getAll():Observable<List[]>{
 
+  }
+
+ */
   //trouver le list choist
   getOne(id:string):List {
     return this.Lists.find(element=>element.id === id);

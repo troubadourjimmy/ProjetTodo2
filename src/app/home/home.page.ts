@@ -59,7 +59,9 @@ export class HomePage implements OnInit {
       (await toast).present();
       this.route.navigate(['login']);
     }
-   
+
+
+
   }
   
 }
