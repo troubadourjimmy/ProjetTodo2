@@ -1,60 +1,27 @@
 import { Injectable } from '@angular/core';
+//import { Firestore } from '@angular/fire/firestore';
 import { element } from 'protractor';
 import { List } from '../models/list';
 import { Todo } from '../models/todo';
+import * as Firestore from '@angular/fire/firestore'
+import { Observable } from 'rxjs';
 
-///////
+
 @Injectable({
   providedIn: 'root'
 })
 export class ListService {
+  
+  Lists$:Firestore.CollectionReference<List>
   Lists:List[];
  
-  // Todo1: Todo = {name:'manger', descrip: 'prepar du riz',status:false};
-  // Todo2: Todo = {name:'sport', descrip: 'faire du velo',status:false };
-  // Lists: List[] = 
-  //           [
-  //             {
-  //               name:'item1', 
-  //               item: [this.Todo1,this.Todo2]
-  //             },
-
-  //             {
-  //               name:'item2', 
-  //               item: [this.Todo1, this.Todo2]
-  //             },
-
-  //             {
-  //               name:'item3', 
-  //               item: [this.Todo1, this.Todo2]
-  //             },
-
-  //             {
-  //               name:'item4', 
-  //               item: [this.Todo1, this.Todo2]
-  //             }
-  //         ];
-  // Lists = 
-  // [
-  //   {
-  //     itemName: 'item1'
-  //   },
-
-  //   {
-  //     itemName: 'item2'
-  //   },
-  //   {
-  //     itemName: 'item3'
-  //   }
-
-  // ];
-
-  constructor() {
-      this.Lists=[];
+  constructor(private firestore:Firestore.Firestore) {
+      //this.Lists=[];
+      this.Lists$ = Firestore.collection(firestore,'todoLists') as Firestore.CollectionReference<List>;
   }
 
-  getLists():List[] {
-    return this.Lists;
+  getLists(): Observable<List[]>{
+    return Firestore.collectionData<List>(this.Lists$,{idField:'id'});
   }
 
   //trouver le list choist

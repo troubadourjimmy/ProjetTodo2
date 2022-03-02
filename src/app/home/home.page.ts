@@ -5,6 +5,8 @@ import { CreateListComponent } from '../modals/create-list/create-list.component
 import { AuthentificationService } from '../services/authentification.service';
 import { Router } from '@angular/router';
 import { getAuth } from "firebase/auth";
+import { EMPTY, Observable } from 'rxjs';
+import { List } from '../models/list';
 
 
 @Component({
@@ -14,7 +16,8 @@ import { getAuth } from "firebase/auth";
 })
 export class HomePage implements OnInit {
 
-  Lists = [];
+  Lists$:Observable<List[]>= EMPTY;
+  Lists:any;
    
   constructor(public listService:ListService, 
               public modalCtrl:ModalController,
@@ -23,7 +26,7 @@ export class HomePage implements OnInit {
               private route:Router) {}
   
   ngOnInit(): void {
-     this.Lists = this.listService.getLists();
+     this.Lists$ = this.listService.getLists();
   }
 
   delete(index){
