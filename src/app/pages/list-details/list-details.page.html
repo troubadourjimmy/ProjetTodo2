@@ -10,7 +10,9 @@
 
 <ion-content>
   <div id="container">
-    <ion-list *ngFor="let todo of list.item; let i = index"> 
+    <!-- <ion-list *ngFor="let todo of list.item; let i = index">  -->
+      <!-- *ngFor item of (items$ | async)?.someProperty -->
+    <ion-list *ngFor="let todo of (List$ | async)?.todos; let i = index"> 
       <ion-item-sliding >
         <div style="align-items: center; display: flex">
             <ion-item style="width: 93%" [routerLink]="['todo-details/'+todo.id]">

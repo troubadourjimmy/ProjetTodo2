@@ -5,6 +5,9 @@ import { List } from '../models/list';
 import { Todo } from '../models/todo';
 import * as Firestore from '@angular/fire/firestore'
 import { Observable } from 'rxjs';
+import { TodoDetailsPageRoutingModule } from '../pages/todo-details/todo-details-routing.module';
+import { map, switchMap } from 'rxjs/operators';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 
 
 @Injectable({
@@ -14,10 +17,15 @@ export class ListService {
   
   Lists$:Firestore.CollectionReference<List>
   Lists:List[];
+  
+  public lists: Observable<List[]>;
  
-  constructor(private firestore:Firestore.Firestore) {
+  constructor(private firestore:Firestore.Firestore
+                     ) {
       //this.Lists=[];
       this.Lists$ = Firestore.collection(firestore,'todoLists') as Firestore.CollectionReference<List>;
+     
+      
   }
 
   getLists(): Observable<List[]>{
@@ -28,6 +36,25 @@ export class ListService {
   getOne(id:string):List {
     return this.Lists.find(element=>element.id === id);
   }
+
+  getOneList(ListId: string):Observable<List>
+  {
+    //`todoLists/${ListId} est le chemain dans firebase
+    const doc = Firestore.doc(this.firestore, `todoLists/${ListId}`) as Firestore.DocumentReference<List>;
+    const todosCollection$ = Firestore.collection(this.firestore,`todoLists/${ListId}/todos`) as Firestore.CollectionReference<Todo>;
+    return Firestore.docData<List>(doc,{ idField: 'id'}).pipe(
+      switchMap(list => Firestore.collectionData<Todo>(todosCollection$, {idField: 'id'}).pipe(
+        map(todos =>({
+          ...list,
+          todos
+        }))
+      ))
+    )
+
+
+  }
+
+   
 
   //creer une nouvelle list 
   addList(list:List) {
