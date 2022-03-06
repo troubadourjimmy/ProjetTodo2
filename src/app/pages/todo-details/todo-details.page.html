@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-item lines = "none">
       <ion-label style="font-weight: 800;font-size: 20px">
-         Todo-Detaille
+        {{(todo| async)?.name}}
       </ion-label> 
     </ion-item>
   </ion-toolbar>
@@ -12,18 +12,20 @@
   <div id="container">   
       <ion-item>
         <ion-label position = "stacked">Name :</ion-label>
-        <ion-text>{{todo.name}}</ion-text> 
-        
+        <!-- <ion-text>{{todo.name}}</ion-text>  -->
+        <ion-text>{{(todo| async)?.name}}</ion-text> 
       </ion-item>     
 
       <ion-item>
         <ion-label position = "stacked">Description:</ion-label>
-        <ion-text>{{todo.descrip}}</ion-text>         
+        <!-- <ion-text>{{todo.descrip}}</ion-text>  -->
+        <ion-text>{{(todo| async)?.description}}</ion-text>          
       </ion-item> 
       
       <ion-item>
         <ion-label position = "stacked">Have done:</ion-label>
-        <ion-checkbox checked={{todo.status}} disabled="false" [(ngModel)]="todo.status" solt="end"></ion-checkbox>        
+        <!-- <ion-checkbox checked={{todo.status}} disabled="false" [(ngModel)]="todo.status" solt="end"></ion-checkbox>   -->
+        <ion-checkbox checked={{(todo|async)?.done}} disabled="false" [(ngModel)]="todo.status" solt="end"></ion-checkbox>      
       </ion-item>     
   </div>
 
