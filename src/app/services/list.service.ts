@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { TodoDetailsPageRoutingModule } from '../pages/todo-details/todo-details-routing.module';
 import { map, switchMap } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { deleteDoc } from 'firebase/firestore';
 
 
 @Injectable({
@@ -17,6 +18,7 @@ export class ListService {
   
   Lists$:Firestore.CollectionReference<List>
   Lists:List[];
+  
   
   public lists: Observable<List[]>;
  
@@ -58,9 +60,24 @@ export class ListService {
    
 
   //creer une nouvelle list 
-  addList(list:List) {
-    this.Lists.push(list);
+  // addList(list:List) {
+  //   this.Lists.push(list);
+  // }
+  
+  //lors du développement avec un langage qui compile en JavaScript, on ne pouvez pas utiliser d'objets personnalisés. 
+  //Au lieu de cela, on doit utiliser des objets JavaScript purs à enregistrer dans la base de données Firestore.
+  // si on fait return Firestore.addDoc(this.Lists$,list),il y a une error:invalid data. Data must be an object, but it was: a custom User object;
+  //Object.assign() convertir la liste en objet
+  async addList(list:List):Promise<Firestore.DocumentReference<List>>
+  {
+     return Firestore.addDoc(this.Lists$,Object.assign({}, list));
   }
+
+  // async deleteList()
+  // {
+  //   await deleteDoc(doc(db, "cities", "DC"));
+  // }
+
 
   //creer une nouvelle todo dans un list chosie
   addTodo(id:string,todo:Todo) {
