@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 })
 export class ListService {
 
-  Lists$:Firestore.CollectionReference<List>
+  Lists$:Firestore.CollectionReference<List>;
   Lists:List[];
  
   constructor(private firestore:Firestore.Firestore) {
@@ -28,7 +28,13 @@ export class ListService {
   getOne(id:string):List {
     return this.Lists.find(element=>element.id === id);
   }
+/*
+  getOneList(id:string):Observable<List>{
+    const doc = Firestore.doc(this.firestore,'todoLists/${id}') as Firestore.DocumentReference<List>;
+    const todosCollection$ = Firestore.collection(this.firestore,'todoLists/${id}/')
+  }
 
+ */
   //creer une nouvelle list 
   addList(list:List) {
     this.Lists.push(list);

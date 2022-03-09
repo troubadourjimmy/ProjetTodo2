@@ -41,7 +41,7 @@
 
 
 <ion-content>
-  <ion-list *ngFor="let list of Lists$|async;"> 
+  <ion-list *ngFor="let list of Lists$|async;let i=index">
     <ion-item-sliding>
       <ion-item [routerLink]="['/list-details/'+ list.id]" >
       <!-- <ion-item routerLink="/list-details" > -->
