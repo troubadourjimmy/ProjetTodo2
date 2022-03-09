@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { TodoDetailsPageRoutingModule } from '../pages/todo-details/todo-details-routing.module';
 import { map, switchMap } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { deleteDoc } from 'firebase/firestore';
+import { doc, deleteDoc } from "firebase/firestore";
 
 
 @Injectable({
@@ -16,17 +16,19 @@ import { deleteDoc } from 'firebase/firestore';
 })
 export class ListService {
   
-  Lists$:Firestore.CollectionReference<List>
+  Lists$:Firestore.CollectionReference<List>;
   Lists:List[];
+  ListCollection: AngularFirestoreCollection<List>;
   
   
   public lists: Observable<List[]>;
  
-  constructor(private firestore:Firestore.Firestore
+  constructor(private firestore:Firestore.Firestore,
+              private afs:AngularFirestore
                      ) {
       //this.Lists=[];
       this.Lists$ = Firestore.collection(firestore,'todoLists') as Firestore.CollectionReference<List>;
-     
+      this.ListCollection = afs.collection<List>('todoLists')
       
   }
 
@@ -71,13 +73,20 @@ export class ListService {
   async addList(list:List):Promise<Firestore.DocumentReference<List>>
   {
      return Firestore.addDoc(this.Lists$,Object.assign({}, list));
+  
   }
 
-  // async deleteList()
+  
+  // deleteList(list:List)
   // {
-  //   await deleteDoc(doc(db, "cities", "DC"));
-  // }
+  //    this.ListCollection.doc(list.id).delete();
+     
+  //  }
 
+   async deleteList(ListId:String){
+    const doc = Firestore.doc(this.firestore, `todoLists/${ListId}`) as Firestore.DocumentReference<List>;
+    return Firestore.deleteDoc(doc);
+   }
 
   //creer une nouvelle todo dans un list chosie
   addTodo(id:string,todo:Todo) {

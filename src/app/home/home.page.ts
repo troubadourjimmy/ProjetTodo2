@@ -29,9 +29,15 @@ export class HomePage implements OnInit {
      this.Lists$ = this.listService.getLists();
   }
 
-  delete(index){
-      this.Lists.splice(index,1);
+   
+  delete(id:String){
+    //this.Lists.splice(index,1);
+    this.listService.deleteList(id);
   }
+
+
+   
+
 
   async addNewList() {
     const modal = await this.modalCtrl.create({
@@ -39,7 +45,7 @@ export class HomePage implements OnInit {
     });
 
     await modal.present();
-    this.Lists = this.listService.getLists();
+    //this.Lists = this.listService.getLists();
   }
 
   async signout()
