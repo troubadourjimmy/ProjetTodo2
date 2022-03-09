@@ -12,7 +12,8 @@ import { ListService } from 'src/app/services/list.service';
 })
 export class TodoDetailsPage implements OnInit {
   
-  todo:Todo;
+  //todo:Todo;
+  todo:any;
   todoid:string;
   listid:string;
   constructor( private modalCtrl:ModalController,
@@ -22,7 +23,8 @@ export class TodoDetailsPage implements OnInit {
   ngOnInit() {
     const todoId=this.actRou.snapshot.paramMap.get('todoId');
     const listId=this.actRou.snapshot.paramMap.get('listId');
-    this.todo=this.listeService.getTodo(listId,todoId);
+    //this.todo=this.listeService.getTodo(listId,todoId);
+    this.todo=this.listeService.getOneTodo(listId,todoId);
     this.todoid = todoId;
     this.listid = listId;
 

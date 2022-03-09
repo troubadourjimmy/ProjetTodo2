@@ -9,6 +9,6 @@ export class List {
         this.name =name;
         this.item =[];
         //Les nombres générés par Math.random seront représentés sous forme de chaînes aléatoires
-        this.id = '_'+Math.random().toString(36).substr(2,9);
+        //this.id = '_'+Math.random().toString(36).substr(2,9);
     }
 }
