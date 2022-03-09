@@ -16,14 +16,12 @@ import { deleteDoc } from 'firebase/firestore';
 })
 export class ListService {
   
-  Lists$:Firestore.CollectionReference<List>
+  Lists$:Firestore.CollectionReference<List>;
+
   Lists:List[];
-  
-  
-  public lists: Observable<List[]>;
+
  
-  constructor(private firestore:Firestore.Firestore
-                     ) {
+  constructor(private firestore:Firestore.Firestore) {
       //this.Lists=[];
       this.Lists$ = Firestore.collection(firestore,'todoLists') as Firestore.CollectionReference<List>;
      
@@ -47,10 +45,10 @@ export class ListService {
     const todosCollection$ = Firestore.collection(this.firestore,`todoLists/${ListId}/todos`) as Firestore.CollectionReference<Todo>;
     return Firestore.docData<List>(doc,{ idField: 'id'}).pipe(
       switchMap(list => Firestore.collectionData<Todo>(todosCollection$, {idField: 'id'}).pipe(
-        map(todos =>({
-          ...list,
-          todos
-        }))
+          map(todos =>({
+            ...list,
+            todos
+          }))
       ))
     )
 
@@ -73,6 +71,10 @@ export class ListService {
      return Firestore.addDoc(this.Lists$,Object.assign({}, list));
   }
 
+  async deleteList(ListId:String){
+    const doc = Firestore.doc(this.firestore, `todoLists/${ListId}`) as Firestore.DocumentReference<List>;
+    return Firestore.deleteDoc(doc);
+  }
   // async deleteList()
   // {
   //   await deleteDoc(doc(db, "cities", "DC"));
@@ -80,8 +82,11 @@ export class ListService {
 
 
   //creer une nouvelle todo dans un list chosie
-  addTodo(id:string,todo:Todo) {
-    this.getOne(id).item.push(todo);
+  addTodo(ListId:string,todo:Todo) {
+    //this.getOne(id).item.push(todo);
+    //const doc = Firestore.doc(this.firestore, `todoLists/${ListId}`) as Firestore.DocumentReference<List>;
+    const todosCollection$ = Firestore.collection(this.firestore,`todoLists/${ListId}/todos`) as Firestore.CollectionReference<Todo>;
+    return Firestore.addDoc(todosCollection$,Object.assign({}, todo));
   }
 
   deleteTodo(todo:Todo[],index:number) {

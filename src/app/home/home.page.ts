@@ -17,7 +17,6 @@ import { List } from '../models/list';
 export class HomePage implements OnInit {
 
   Lists$:Observable<List[]>= EMPTY;
-  Lists:any;
    
   constructor(public listService:ListService, 
               public modalCtrl:ModalController,
@@ -29,8 +28,10 @@ export class HomePage implements OnInit {
      this.Lists$ = this.listService.getLists();
   }
 
-  delete(index){
-      this.Lists.splice(index,1);
+  delete(id:String){
+      //this.Lists.splice(index,1);
+      this.listService.deleteList(id);
+
   }
 
   async addNewList() {
@@ -39,7 +40,6 @@ export class HomePage implements OnInit {
     });
 
     await modal.present();
-    this.Lists = this.listService.getLists();
   }
 
   async signout()
