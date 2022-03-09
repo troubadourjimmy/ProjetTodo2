@@ -16,11 +16,9 @@ export class ListDetailsPage implements OnInit {
 
   public list: List;
   Todos:Todo[];
-  
+  listId:string;
   List$: Observable<List>= EMPTY;
-  //List$:any;
-  // Todo1: Todo = {name:'manger', descrip: 'prepar du riz',status:false};
-
+   
 
   constructor(private modalCtrl:ModalController,
               private listeService:ListService,
@@ -34,23 +32,24 @@ export class ListDetailsPage implements OnInit {
 
     //this.List$ = this.listeService.getOneList(this.actRou.snapshot.params.id);
     this.List$ = this.listeService.getOneList(listId);
-    
+    this.listId = listId;
   }
 
-  //erreur
-  // deleteTodo(index)
-  // {
-  //     this.list.item.splice(index,1);
+  
+
+  // deleteTodo(index) {
+  //   this.listeService.deleteTodo(this.list.item,index);
   // }
-  deleteTodo(index) {
-    this.listeService.deleteTodo(this.list.item,index);
+  
+  deleteTodo(todoId:string) {
+    this.listeService.deleteTodo(this.listId,todoId);
   }
 
   async addNewTodo() {
     const modal = await this.modalCtrl.create({
         component:CreateTodoComponent,
         componentProps: {
-          'listId' : this.list.id
+          'listId' : this.listId
         }
     });
 

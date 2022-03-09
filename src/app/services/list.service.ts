@@ -89,18 +89,33 @@ export class ListService {
    }
 
   //creer une nouvelle todo dans un list chosie
-  addTodo(id:string,todo:Todo) {
-    this.getOne(id).item.push(todo);
+  // addTodo(id:string,todo:Todo) {
+  //   this.getOne(id).item.push(todo);
+  // }
+
+  //creer une nouvelle todo dans un list chosie
+  addTodo(ListId:string,todo:Todo) {
+    //this.getOne(id).item.push(todo);
+    //const doc = Firestore.doc(this.firestore, `todoLists/${ListId}`) as Firestore.DocumentReference<List>;
+    const todosCollection$ = Firestore.collection(this.firestore,`todoLists/${ListId}/todos`) as Firestore.CollectionReference<Todo>;
+    return Firestore.addDoc(todosCollection$,Object.assign({}, todo));
   }
 
-  deleteTodo(todo:Todo[],index:number) {
-    todo.splice(index,1);
+  // deleteTodo(todo:Todo[],index:number) {
+  //   todo.splice(index,1);
+  // }
+
+  async deleteTodo(ListId:string, todoId:string)
+  {
+    const doc = Firestore.doc(this.firestore, `todoLists/${ListId}/todos/${todoId}`) as Firestore.DocumentReference<Todo>;
+    return Firestore.deleteDoc(doc);
   }
 
   //trouver un todo chosit dans un list
-  getTodo(listId:string, todoId:string):Todo {
-     return this.getOne(listId).item.find(element=>element.id === todoId);
-  }
+  // getTodo(listId:string, todoId:string):Todo {
+  //    return this.getOne(listId).todos.find(element=>element.id === todoId);
+  // }
+   
 
   getOneTodo(listId:string, todoId:string):Observable<Todo> {
     const doc = Firestore.doc(this.firestore, `todoLists/${listId}/todos/${todoId}`) as Firestore.DocumentReference<Todo>;
