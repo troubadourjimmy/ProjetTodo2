@@ -129,6 +129,13 @@ export class ListService {
      
   }
 
+  async modifierTodo(ListId:string, todoId:string,todoName:string,TodoDescip:string)
+  {
+
+    const doc = Firestore.doc(this.firestore, `todoLists/${ListId}/todos/${todoId}`) as Firestore.DocumentReference<Todo>;
+    Firestore.updateDoc(doc,{name:todoName,description:TodoDescip});
+  }
+
 
 
 }
