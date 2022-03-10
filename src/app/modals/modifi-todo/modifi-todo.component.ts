@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { of } from 'rxjs';
 import { Todo } from 'src/app/models/todo';
 import { ListService } from 'src/app/services/list.service';
 
@@ -13,7 +14,7 @@ export class ModifiTodoComponent implements OnInit {
   @Input() listId:string
   @Input() todoId:string
   todo:Todo;
-  name:string;
+  todoName:string;
   description:string;
 
   ModiTodoForm: FormGroup;
@@ -22,17 +23,24 @@ export class ModifiTodoComponent implements OnInit {
               private modalContrl:ModalController){}
 
   ngOnInit() {
-    //this.todo = this.listeService.getOneTodo(this.listId,this.todoId);
-    this.listeService.getOneTodo(this.listId,this.todoId).subscribe(result=>{this.name = result.name});
-    this.listeService.getOneTodo(this.listId,this.todoId).subscribe(result=>{this.description = result.description});
-    console.log(this.todoId)
-    //afficher le todo pour modifier
-    this.ModiTodoForm = this.fb.group({
-         
-        //name: [this.listeService.getOneTodo(this.listId,this.todoId).subscribe(result=>{ this.name= result.name}),[Validators.required,Validators.minLength(3)]],
-        name: [this.name,[Validators.required,Validators.minLength(3)]],
-       // descrip: [this.listeService.getOneTodo(this.listId,this.todoId).description,[Validators.required,Validators.maxLength(150)]]
-        descrip: [this.description,[Validators.required,Validators.maxLength(150)]]
+     
+    this.getValue();
+    console.log(this.todoName);
+    
+    console.log(this.todoId);
+    //afficher le todo detaille pour modifier
+    this.ModiTodoForm = this.fb.group({   
+        name: [,[Validators.required,Validators.minLength(3)]],
+        descrip: [,[Validators.required,Validators.maxLength(150)]]
+    });
+  }
+
+  getValue()
+  {
+    return this.listeService.getOneTodo(this.listId,this.todoId).subscribe((data:any)=>{
+      this.todoName = data.name;
+      this.description=data.description;
+      console.log(this.todoName);
     });
   }
 

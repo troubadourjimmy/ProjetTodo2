@@ -13,9 +13,9 @@
     <ion-item>
       <ion-label position = "stacked">Name:</ion-label>
       <!-- formControlName = "name"，‘name’ as the same as this.fb.group({name: ['',[Validators.required,Validators.min(3)]]}) -->
-      <ion-input formControlName = "name"></ion-input>
+      <ion-input formControlName = "name" value="{{todoName}}"></ion-input>
       <ion-label position = "stacked">Description:</ion-label>
-      <ion-input formControlName = "descrip"></ion-input>
+      <ion-input formControlName = "descrip" value="{{description}}"></ion-input>
     </ion-item>
     <ion-button [disabled]="ModiTodoForm.invalid" expand="block" type="submit">Modifier</ion-button>
   </form>
