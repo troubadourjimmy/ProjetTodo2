@@ -16,6 +16,8 @@ export class TodoDetailsPage implements OnInit {
   todo:any;
   todoid:string;
   listid:string;
+  //bind avec checkbox
+  done:boolean;
   constructor( private modalCtrl:ModalController,
                private listeService:ListService,
                private actRou:ActivatedRoute) { }
@@ -42,6 +44,12 @@ export class TodoDetailsPage implements OnInit {
 
     await modal.present();
     
+  }
+
+  //// modifier le todo.done pour le checkbox
+  ModifierTodoDone()
+  {
+      this.listeService.modifierTodoDone(this.listid,this.todoid,this.done);
   }
 
 }

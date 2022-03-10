@@ -129,6 +129,7 @@ export class ListService {
      
   }
 
+  
   async modifierTodo(ListId:string, todoId:string,todoName:string,TodoDescip:string)
   {
 
@@ -136,6 +137,11 @@ export class ListService {
     Firestore.updateDoc(doc,{name:todoName,description:TodoDescip});
   }
 
-
+  // modifier le todo.done pour le checkbox
+  async modifierTodoDone(ListId:string, todoId:string,TodoDone:boolean)
+  {
+    const doc = Firestore.doc(this.firestore, `todoLists/${ListId}/todos/${todoId}`) as Firestore.DocumentReference<Todo>;
+    Firestore.updateDoc(doc,{done:TodoDone});
+  }
 
 }

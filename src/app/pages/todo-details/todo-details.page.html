@@ -25,7 +25,7 @@
       <ion-item>
         <ion-label position = "stacked">Have done:</ion-label>
         <!-- <ion-checkbox checked={{todo.status}} disabled="false" [(ngModel)]="todo.status" solt="end"></ion-checkbox>   -->
-        <ion-checkbox checked={{(todo|async)?.done}} disabled="false" [(ngModel)]="todo.status" solt="end"></ion-checkbox>      
+        <ion-checkbox checked={{(todo|async)?.done}} disabled="false" [(ngModel)]="done"  (ionChange)=" ModifierTodoDone()" solt="end"></ion-checkbox>      
       </ion-item>     
   </div>
 

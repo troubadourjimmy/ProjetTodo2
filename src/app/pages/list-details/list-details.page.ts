@@ -18,6 +18,8 @@ export class ListDetailsPage implements OnInit {
   Todos:Todo[];
   listId:string;
   List$: Observable<List>= EMPTY;
+  //bind avec le checkbox 
+  
    
 
   constructor(private modalCtrl:ModalController,
@@ -57,4 +59,5 @@ export class ListDetailsPage implements OnInit {
     
   }
   
+
 }
