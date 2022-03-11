@@ -35,7 +35,7 @@ export class ListService {
       
   }
 
-  getLists(): Observable<List[]>{
+  getOwnerLists(): Observable<List[]>{
     //Obtenir l'utilisateur actuellement connecté
     const auth = getAuth();
     const user = auth.currentUser;
@@ -46,11 +46,32 @@ export class ListService {
     //const writer$ = this.afs.collection<List>('todoLists',ref => ref.where('canWrite','==', user.email)).valueChanges({idField:'id'});
     //return combineLatest([owner$,reader$,writer$]).pipe(map(([owner,reader,writer]) => owner.concat(reader).concat(writer)));
     return owner$;
-    //console.log(this.authService.userCredential.user.email);
     //return Firestore.collectionData<List>(this.Lists$,{idField:'id'});
   }
 
+  getReadLists(): Observable<List[]>{
+    //Obtenir l'utilisateur actuellement connecté
+    const auth = getAuth();
+    const user = auth.currentUser;
+    //"array-contains" est different que '==' dans getOwnerLists(), parcque owner a seulement une user.email, 
+    //mais dans canRead et canWrite ont plusieurs user.email.
+    const reader$ = this.afs.collection<List>('todoLists',ref => ref.where('canRead',"array-contains", user.email)).valueChanges({idField:'id'});
   
+    return reader$;
+     
+  }
+
+  getWriteLists(): Observable<List[]>{
+    //Obtenir l'utilisateur actuellement connecté
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const writer$ = this.afs.collection<List>('todoLists',ref => ref.where('canWrite',"array-contains", user.email)).valueChanges({idField:'id'});
+     
+    return writer$;
+    //return Firestore.collectionData<List>(this.Lists$,{idField:'id'});
+  }
+
+    
   //trouver le list choist
   getOneList(ListId: string):Observable<List>
   {

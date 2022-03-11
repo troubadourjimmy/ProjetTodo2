@@ -16,7 +16,9 @@ import { List } from '../models/list';
 })
 export class HomePage implements OnInit {
 
-  Lists$:Observable<List[]>= EMPTY;
+  OwnerLists$:Observable<List[]>= EMPTY;
+  ReadLists$:Observable<List[]>= EMPTY;
+  WriteLists$:Observable<List[]>= EMPTY;
   Lists:any;
    
   constructor(public listService:ListService, 
@@ -26,7 +28,9 @@ export class HomePage implements OnInit {
               private route:Router) {}
   
   ngOnInit(): void {
-     this.Lists$ = this.listService.getLists();
+     this.OwnerLists$ = this.listService.getOwnerLists();
+     this.ReadLists$ = this.listService.getReadLists();
+     this.WriteLists$ = this.listService.getWriteLists();
   }
 
    
