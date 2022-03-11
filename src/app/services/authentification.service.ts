@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';  
 import 'firebase/auth';
-//import firebase from 'firebase/app';
 import { Router } from '@angular/router';
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { async } from '@firebase/util';
 import { ToastController } from '@ionic/angular';
+import firebase from 'firebase/compat/app';
+
  
 
  
@@ -14,7 +15,8 @@ import { ToastController } from '@ionic/angular';
 })
 export class AuthentificationService {
   
-  userData:any;
+  
+  
   constructor(private fireAuthen:AngularFireAuth,
               private route:Router,
               private toastCtrl:ToastController) {}
@@ -46,6 +48,7 @@ export class AuthentificationService {
     //methode example sur le lien https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth
     //https://firebase.google.com/docs/auth/web/password-auth?hl=zh-cn#web-version-9_1
     const userCred= await this.fireAuthen.signInWithEmailAndPassword(email, password);
+    //console.log(userCred.user.email);
     return userCred;
   }
 
@@ -128,18 +131,6 @@ export class AuthentificationService {
 
 
   }
-
-
-  // sendPasswordResetEmail(auth, email)
-  // .then(() => {
-  //   // Password reset email sent!
-  //   // ..
-  // })
-  // .catch((error) => {
-  //   const errorCode = error.code;
-  //   const errorMessage = error.message;
-  //   // ..
-  // });
 
 
 }

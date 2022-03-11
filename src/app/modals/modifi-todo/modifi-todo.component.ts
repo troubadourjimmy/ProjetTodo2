@@ -35,6 +35,7 @@ export class ModifiTodoComponent implements OnInit {
     });
   }
 
+  //obtenir le todoName et descrip pour modifier
   getValue()
   {
     return this.listeService.getOneTodo(this.listId,this.todoId).subscribe((data:any)=>{

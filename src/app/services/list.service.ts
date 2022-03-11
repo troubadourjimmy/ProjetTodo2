@@ -4,11 +4,13 @@ import { element } from 'protractor';
 import { List } from '../models/list';
 import { Todo } from '../models/todo';
 import * as Firestore from '@angular/fire/firestore'
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { TodoDetailsPageRoutingModule } from '../pages/todo-details/todo-details-routing.module';
 import { map, switchMap } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { doc, deleteDoc } from "firebase/firestore";
+import { AuthentificationService } from './authentification.service';
+import { getAuth } from "firebase/auth";
 
 
 @Injectable({
@@ -24,23 +26,31 @@ export class ListService {
   public lists: Observable<List[]>;
  
   constructor(private firestore:Firestore.Firestore,
-              private afs:AngularFirestore
+              private afs:AngularFirestore,
+              private authService: AuthentificationService
                      ) {
       //this.Lists=[];
       this.Lists$ = Firestore.collection(firestore,'todoLists') as Firestore.CollectionReference<List>;
-      this.ListCollection = afs.collection<List>('todoLists')
+      //this.ListCollection = afs.collection<List>('todoLists')
       
   }
 
   getLists(): Observable<List[]>{
-    return Firestore.collectionData<List>(this.Lists$,{idField:'id'});
+    //Obtenir l'utilisateur actuellement connecté
+    const auth = getAuth();
+    const user = auth.currentUser;
+    
+    const owner$ = this.afs.collection<List>('todoLists',ref => ref.where('owner','==', user.email)).valueChanges({idField:'id'});
+    console.log(user.email);
+    //const reader$ = this.afs.collection<List>('todoLists',ref => ref.where('canRead','==', user.email)).valueChanges({idField:'id'});
+    //const writer$ = this.afs.collection<List>('todoLists',ref => ref.where('canWrite','==', user.email)).valueChanges({idField:'id'});
+    //return combineLatest([owner$,reader$,writer$]).pipe(map(([owner,reader,writer]) => owner.concat(reader).concat(writer)));
+    return owner$;
+    //console.log(this.authService.userCredential.user.email);
+    //return Firestore.collectionData<List>(this.Lists$,{idField:'id'});
   }
 
-  // //trouver le list choist
-  getOne(id:string):List {
-    return this.Lists.find(element=>element.id === id);
-  }
- 
+  
   //trouver le list choist
   getOneList(ListId: string):Observable<List>
   {
