@@ -15,9 +15,10 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { environment } from 'src/environments/environment.prod';
 import { AngularFireModule } from '@angular/fire/compat';
+import { ShareComponent } from './modals/share/share.component';
 
 @NgModule({
-  declarations: [AppComponent,CreateTodoComponent,ModifiTodoComponent],
+  declarations: [AppComponent,CreateTodoComponent,ModifiTodoComponent,ShareComponent],
   entryComponents: [],
   imports: [BrowserModule, 
             IonicModule.forRoot(), 

@@ -6,6 +6,7 @@ import { ModalController } from '@ionic/angular';
 import { CreateTodoComponent } from 'src/app/modals/create-todo/create-todo.component';
 import { ListService } from 'src/app/services/list.service';
 import { EMPTY, Observable } from 'rxjs';
+import { ShareComponent } from 'src/app/modals/share/share.component';
 
 @Component({
   selector: 'app-list-details',
@@ -58,6 +59,21 @@ export class ListDetailsPage implements OnInit {
     await modal.present();
     
   }
+
+  async shareList() {
+    const modal = await this.modalCtrl.create({
+        component:ShareComponent,
+        componentProps: {
+          'listId' : this.listId
+        }
+    });
+
+    await modal.present();
+    
+  }
+
+  
+  
   
 
 }

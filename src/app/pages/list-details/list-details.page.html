@@ -31,7 +31,12 @@
         <ion-fab-button (click)="addNewTodo()">
           <ion-icon name = "add"></ion-icon>
       </ion-fab-button>
+      </ion-fab>
 
+      <ion-fab  horizontal="start"  vertical="bottom" slot="fixed">
+        <ion-fab-button (click)="shareList()">
+          <ion-icon name = "paper-plane-outline"></ion-icon>
+        </ion-fab-button>
       </ion-fab>
   </div>
 </ion-content>

@@ -103,6 +103,9 @@ export class ListService {
   //Object.assign() convertir la liste en objet
   async addList(list:List):Promise<Firestore.DocumentReference<List>>
   {
+     const auth = getAuth();
+     const user = auth.currentUser;
+     list.owner = user.email;
      return Firestore.addDoc(this.Lists$,Object.assign({}, list));
   
   }
@@ -175,4 +178,9 @@ export class ListService {
     Firestore.updateDoc(doc,{done:TodoDone});
   }
 
+
+  shareList()
+  {
+    
+  }
 }
