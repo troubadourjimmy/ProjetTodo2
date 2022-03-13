@@ -13,7 +13,7 @@ export class ShareComponent implements OnInit {
   shareForm: FormGroup;
   constructor(private fb: FormBuilder,
     private listService: ListService,
-    private modalCtrl:ModalController) {
+    private modalContrl:ModalController) {
       this.shareForm = this.fb.group({
       canRead: ['',[Validators.required,Validators.minLength(0)]],
       canWrite: ['',[Validators.required,Validators.minLength(0)]]
@@ -24,7 +24,8 @@ export class ShareComponent implements OnInit {
 
   shareList()
   {
-
+      this.listService.shareList(this.listId, this.shareForm.get("canRead").value, this.shareForm.get("canWrite").value);
+      this.modalContrl.dismiss();
   }
 
 }

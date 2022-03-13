@@ -8,7 +8,7 @@ import { combineLatest, Observable } from 'rxjs';
 import { TodoDetailsPageRoutingModule } from '../pages/todo-details/todo-details-routing.module';
 import { map, switchMap } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { doc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { AuthentificationService } from './authentification.service';
 import { getAuth } from "firebase/auth";
 
@@ -179,8 +179,15 @@ export class ListService {
   }
 
 
-  shareList()
-  {
-    
-  }
+  async shareList(ListId:String,readEmail:string,writeEmail:string)
+ {
+  
+ 
+   const Read = Firestore.doc(this.firestore,`todoLists/${ListId}`) as Firestore.DocumentReference<List>;
+   await updateDoc(Read,{canRead:arrayUnion(readEmail)});
+   await updateDoc(Read,{canWrite:arrayUnion(writeEmail)});
+ 
+   
+ }
+
 }

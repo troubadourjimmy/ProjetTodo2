@@ -73,6 +73,8 @@ export class ListDetailsPage implements OnInit {
   }
 
   
+
+  
   
   
 
