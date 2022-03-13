@@ -178,16 +178,23 @@ export class ListService {
     Firestore.updateDoc(doc,{done:TodoDone});
   }
 
-
-  async shareList(ListId:String,readEmail:string,writeEmail:string)
+ //ajouter l'email to shareRead dans firestore
+  async shareReadList(ListId:String,email:string)
  {
   
  
-   const Read = Firestore.doc(this.firestore,`todoLists/${ListId}`) as Firestore.DocumentReference<List>;
-   await updateDoc(Read,{canRead:arrayUnion(readEmail)});
-   await updateDoc(Read,{canWrite:arrayUnion(writeEmail)});
+   const list = Firestore.doc(this.firestore,`todoLists/${ListId}`) as Firestore.DocumentReference<List>;
+   await updateDoc(list,{canRead:arrayUnion(email)});
+    
+ }
+
+ ////ajouter l'email to shareWrite dans firestore
+ async shareWriteList(ListId:String,email:string)
+ {
+  
  
-   
+   const list = Firestore.doc(this.firestore,`todoLists/${ListId}`) as Firestore.DocumentReference<List>;
+   await updateDoc(list,{canWrite:arrayUnion(email)});  
  }
 
 }

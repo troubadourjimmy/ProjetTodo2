@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { stringify } from 'querystring';
 import { ListService } from 'src/app/services/list.service';
 
 @Component({
@@ -11,12 +12,16 @@ import { ListService } from 'src/app/services/list.service';
 export class ShareComponent implements OnInit {
   @Input() listId:string;
   shareForm: FormGroup;
+  //value bind avec ion-select authorization
+  auth:string;
   constructor(private fb: FormBuilder,
     private listService: ListService,
     private modalContrl:ModalController) {
       this.shareForm = this.fb.group({
-      canRead: ['',[Validators.required,Validators.minLength(0)]],
-      canWrite: ['',[Validators.required,Validators.minLength(0)]]
+      email: ['',[Validators.required,Validators.minLength(5)]],
+       
+      
+      
   });
 }
 
@@ -24,8 +29,28 @@ export class ShareComponent implements OnInit {
 
   shareList()
   {
-      this.listService.shareList(this.listId, this.shareForm.get("canRead").value, this.shareForm.get("canWrite").value);
+      if(this.auth=="canRead")
+      {
+        this.listService.shareReadList(this.listId, this.shareForm.get("email").value);
+      }
+      
+      else if(this.auth=="canWrite")
+      {
+        this.listService.shareWriteList(this.listId, this.shareForm.get("email").value);
+      }
+      
       this.modalContrl.dismiss();
+  }
+
+  cancle()
+  {
+    this.modalContrl.dismiss();
+  }
+
+  //afficher la value de autho(read or write) choisit
+  getAuthValue()
+  {
+    console.log(this.auth);
   }
 
 }

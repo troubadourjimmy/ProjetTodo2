@@ -9,13 +9,19 @@
 </ion-header>
 
 <ion-content>
+  <ion-item>
+    <ion-label style="font-size: 17px;">Authorization</ion-label>
+    <ion-select [(ngModel)]="auth" (ionChange)=" getAuthValue()" interface="popover">
+      <ion-select-option value="canRead">Can Read</ion-select-option>
+      <ion-select-option value="canWrite">Can Write</ion-select-option>
+    </ion-select>
+  </ion-item>
   <form [formGroup]="shareForm">
     <ion-item>
-      <ion-label position = "stacked">can read:</ion-label>
-      <ion-input formControlName = "canRead"></ion-input>
-      <ion-label position = "stacked">can write:</ion-label>
-      <ion-input formControlName = "canWrite"></ion-input>
+      <ion-label position = "stacked" style="font-size: 25px;">Email:</ion-label>
+      <ion-input formControlName = "email" placeholder="Enter the email of the user to share"></ion-input>
     </ion-item>
     <ion-button [disabled]="shareForm.invalid" expand="block" type="submit" (click)="shareList()">Share</ion-button>
+    <ion-button  expand="block" color="tertiary" (click)="cancle()">Cancle</ion-button>
   </form>
 </ion-content>

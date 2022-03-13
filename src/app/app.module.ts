@@ -6,7 +6,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateTodoComponent } from './modals/create-todo/create-todo.component';
 import { ModifiTodoComponent } from './modals/modifi-todo/modifi-todo.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
@@ -22,7 +22,7 @@ import { ShareComponent } from './modals/share/share.component';
   entryComponents: [],
   imports: [BrowserModule, 
             IonicModule.forRoot(), 
-            AppRoutingModule,ReactiveFormsModule, 
+            AppRoutingModule,ReactiveFormsModule,  FormsModule,
             provideFirebaseApp(() => initializeApp(environment.firebase)), 
             provideAuth(() => getAuth()), 
             provideFirestore(() => getFirestore()), 
