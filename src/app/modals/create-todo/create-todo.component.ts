@@ -36,4 +36,9 @@ export class CreateTodoComponent implements OnInit {
        
   }
 
+  cancle()
+  {
+    this.modalCtrl.dismiss();
+  }
+
 }

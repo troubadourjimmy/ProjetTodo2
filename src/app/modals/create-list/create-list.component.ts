@@ -34,4 +34,8 @@ export class CreateListComponent implements OnInit {
     }
   }
 
+  cancle()
+  {
+    this.modalCtrl.dismiss();
+  }
 }

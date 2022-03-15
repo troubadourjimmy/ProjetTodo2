@@ -53,5 +53,8 @@ export class ModifiTodoComponent implements OnInit {
     this.modalContrl.dismiss();
   }
 
-
+  cancle()
+  {
+    this.modalContrl.dismiss();
+  }
 }
