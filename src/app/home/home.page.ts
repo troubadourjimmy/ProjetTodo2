@@ -20,6 +20,7 @@ export class HomePage implements OnInit {
   ReadLists$:Observable<List[]>= EMPTY;
   WriteLists$:Observable<List[]>= EMPTY;
   Lists:any;
+  userEmail:string
    
   constructor(public listService:ListService, 
               public modalCtrl:ModalController,
@@ -31,6 +32,11 @@ export class HomePage implements OnInit {
      this.OwnerLists$ = this.listService.getOwnerLists();
      this.ReadLists$ = this.listService.getReadLists();
      this.WriteLists$ = this.listService.getWriteLists();
+     
+     ////Obtenir les info d'utilisateur actuellement connecté
+     const auth = getAuth();
+     const user = auth.currentUser;
+     this.userEmail=user.email;
   }
 
    
@@ -40,8 +46,7 @@ export class HomePage implements OnInit {
   }
 
 
-   
-
+  
 
   async addNewList() {
     const modal = await this.modalCtrl.create({
