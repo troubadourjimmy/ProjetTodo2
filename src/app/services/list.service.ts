@@ -49,6 +49,7 @@ export class ListService {
     //return Firestore.collectionData<List>(this.Lists$,{idField:'id'});
   }
 
+  //obtenir les lists qu'on peut lire pour l'utilisateur connecte
   getReadLists(): Observable<List[]>{
     //Obtenir l'utilisateur actuellement connecté
     const auth = getAuth();
@@ -61,6 +62,8 @@ export class ListService {
      
   }
 
+  
+  ////obtenir les lists qu'on peut ecrire/modifier pour l'utilisateur connecte
   getWriteLists(): Observable<List[]>{
     //Obtenir l'utilisateur actuellement connecté
     const auth = getAuth();
@@ -70,6 +73,13 @@ export class ListService {
     return writer$;
     //return Firestore.collectionData<List>(this.Lists$,{idField:'id'});
   }
+
+  //obtenier des utilisatuer de authorisation read pour une list
+  getReadAuthUser()
+  {
+    
+  }
+
 
     
   //trouver le list choist

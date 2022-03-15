@@ -12,6 +12,7 @@
   <div id="container">
     <!-- <ion-list *ngFor="let todo of list.item; let i = index">  -->
       <!-- *ngFor item of (items$ | async)?.someProperty -->
+    <ion-label color="primary"  style="font-size:17px">Todos</ion-label>
     <ion-list *ngFor="let todo of (List$ | async)?.todos; let i = index"> 
       <ion-item-sliding >
         <div style="align-items: center; display: flex">
@@ -23,6 +24,38 @@
         </div>
         <ion-item-options side="end">
           <ion-item-option (click) = "deleteTodo(todo.id)"  color = "danger">delete</ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
+    <br/>
+
+    <ion-label color="primary"  style="font-size:17px">Users can read this list</ion-label>
+    <ion-list *ngFor="let item of (List$ | async)?.canRead; let i = index"> 
+      <ion-item-sliding >
+        <div style="align-items: center; display: flex">
+          <ion-item style="width: 93%">
+             <ion-text >{{item}}</ion-text>    
+          </ion-item>  
+        </div>
+        <ion-item-options side="end">
+          <ion-item-option color = "danger">delete</ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
+    <br/>
+
+    <ion-label color="primary"  style="font-size:17px">Users can write this list</ion-label>
+    <ion-list *ngFor="let item of (List$ | async)?.canWrite; let i = index"> 
+      <ion-item-sliding >
+        <div style="align-items: center; display: flex">
+          <ion-item style="width: 93%">
+             <ion-text >{{item}}</ion-text>    
+          </ion-item>  
+        </div>
+        <ion-item-options side="end">
+          <ion-item-option color = "danger">delete</ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
