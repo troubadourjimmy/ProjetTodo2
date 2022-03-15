@@ -8,7 +8,7 @@ import { combineLatest, Observable } from 'rxjs';
 import { TodoDetailsPageRoutingModule } from '../pages/todo-details/todo-details-routing.module';
 import { map, switchMap } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { doc, deleteDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, deleteDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { AuthentificationService } from './authentification.service';
 import { getAuth } from "firebase/auth";
 
@@ -74,11 +74,6 @@ export class ListService {
     //return Firestore.collectionData<List>(this.Lists$,{idField:'id'});
   }
 
-  //obtenier des utilisatuer de authorisation read pour une list
-  getReadAuthUser()
-  {
-    
-  }
 
 
     
@@ -205,6 +200,18 @@ export class ListService {
  
    const list = Firestore.doc(this.firestore,`todoLists/${ListId}`) as Firestore.DocumentReference<List>;
    await updateDoc(list,{canWrite:arrayUnion(email)});  
+ }
+
+ async deleteReadUser(ListId:String,email:string)
+ {
+  const list = Firestore.doc(this.firestore,`todoLists/${ListId}`) as Firestore.DocumentReference<List>;
+  await updateDoc(list,{canRead:arrayRemove(email)}); 
+ }
+
+ async deleteWriteUser(ListId:String,email:string)
+ {
+  const list = Firestore.doc(this.firestore,`todoLists/${ListId}`) as Firestore.DocumentReference<List>;
+  await updateDoc(list,{canWrite:arrayRemove(email)}); 
  }
 
 }

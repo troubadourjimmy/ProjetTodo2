@@ -48,6 +48,16 @@ export class ListDetailsPage implements OnInit {
     this.listeService.deleteTodo(this.listId,todoId);
   }
 
+  deleteReadUser(email:string)
+  {
+    this.listeService.deleteReadUser(this.listId,email);
+  }
+
+  deleteWriteUser(email:string)
+  {
+    this.listeService.deleteWriteUser(this.listId,email);
+  }
+
   async addNewTodo() {
     const modal = await this.modalCtrl.create({
         component:CreateTodoComponent,
