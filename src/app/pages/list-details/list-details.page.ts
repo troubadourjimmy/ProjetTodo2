@@ -7,6 +7,7 @@ import { CreateTodoComponent } from 'src/app/modals/create-todo/create-todo.comp
 import { ListService } from 'src/app/services/list.service';
 import { EMPTY, Observable } from 'rxjs';
 import { ShareComponent } from 'src/app/modals/share/share.component';
+import { getAuth } from "firebase/auth";
 
 @Component({
   selector: 'app-list-details',
@@ -19,6 +20,7 @@ export class ListDetailsPage implements OnInit {
   Todos:Todo[];
   listId:string;
   List$: Observable<List>= EMPTY;
+  userEmail:string;
   //bind avec le checkbox 
   
    
@@ -36,6 +38,11 @@ export class ListDetailsPage implements OnInit {
     //this.List$ = this.listeService.getOneList(this.actRou.snapshot.params.id);
     this.List$ = this.listeService.getOneList(listId);
     this.listId = listId;
+    const auth = getAuth();
+    const user = auth.currentUser;
+    this.userEmail = user.email;
+
+
   }
 
   

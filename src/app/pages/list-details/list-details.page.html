@@ -31,36 +31,42 @@
     </ion-list>
 
     <br/>
-
-    <ion-label color="primary"  style="font-size:17px">Users can read this list</ion-label>
-    <ion-list *ngFor="let item of (List$ | async)?.canRead; let i = index"> 
-      <ion-item-sliding >
-        <div style="align-items: center; display: flex">
-          <ion-item style="width: 93%">
-             <ion-text >{{item}}</ion-text>    
-          </ion-item>  
-        </div>
-        <ion-item-options side="end">
-          <ion-item-option (click) = "deleteReadUser(item)" color = "danger">delete</ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
+    <div *ngIf="(List$ | async)?.owner==userEmail; then thenBlock"></div>
+    <ng-template #thenBlock>
+      <ion-label color="primary"  style="font-size:17px">Users can read this list</ion-label>
+      <ion-list *ngFor="let item of (List$ | async)?.canRead; let i = index"> 
+        <ion-item-sliding >
+          <div style="align-items: center; display: flex">
+            <ion-item style="width: 93%">
+              <ion-text >{{item}}</ion-text>    
+            </ion-item>  
+          </div>
+          <ion-item-options side="end">
+            <ion-item-option (click) = "deleteReadUser(item)" color = "danger">delete</ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
 
     <br/>
 
-    <ion-label color="primary"  style="font-size:17px">Users can write this list</ion-label>
-    <ion-list *ngFor="let item of (List$ | async)?.canWrite; let i = index"> 
-      <ion-item-sliding >
-        <div style="align-items: center; display: flex">
-          <ion-item style="width: 93%">
-             <ion-text >{{item}}</ion-text>    
-          </ion-item>  
-        </div>
-        <ion-item-options side="end">
-          <ion-item-option (click) = "deleteWriteUser(item)" color = "danger">delete</ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
+      <ion-label color="primary"  style="font-size:17px">Users can write this list</ion-label>
+      <ion-list *ngFor="let item of (List$ | async)?.canWrite; let i = index"> 
+        <ion-item-sliding >
+          <div style="align-items: center; display: flex">
+            <ion-item style="width: 93%">
+              <ion-text >{{item}}</ion-text>    
+            </ion-item>  
+          </div>
+          <ion-item-options side="end">
+            <ion-item-option (click) = "deleteWriteUser(item)" color = "danger">delete</ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </ng-template>
+
+
+
+
 
       <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button (click)="addNewTodo()">
