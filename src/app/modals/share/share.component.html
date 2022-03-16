@@ -24,24 +24,28 @@
         required minlength="3" appForbiddenUser="{{userEmail}}"
         [(ngModel)]="inputEmail">
       </ion-input>
-      <ion-text  color = "danger" *ngIf="inputEmail =='111'">
-        can't 
+      <ion-text  color = "danger" *ngIf="inputEmail == userEmail">
+        can't share the liste to yourself
       </ion-text>
     </ion-item>
-    <div *ngIf="shareForm.invalid && (shareForm.dirty || shareForm.touched)"
+
+    <ion-text *ngIf="shareForm.errors?.['required']">
+      Name is required.
+    </ion-text>
+   
+    <!-- <div *ngIf="shareForm.invalid && (shareForm.dirty || shareForm.touched)"
     class="alert">
 
-    <div *ngIf="shareForm.errors?.['required']">
-      Name is required.
-    </div>
-    <div *ngIf="shareForm.errors?.['minlength']">
-      Name must be at least 4 characters long.
-    </div>
-    <div *ngIf="shareForm.errors?.['forbiddenName']">
-      Name cannot be Bob.
-    </div>
-
-</div>
+        <div *ngIf="shareForm.errors?.['required']">
+          Name is required.
+        </div>
+        <div *ngIf="shareForm.errors?.['minlength']">
+          Name must be at least 4 characters long.
+        </div>
+        <div *ngIf="shareForm.errors?.['forbiddenUserValidator']">
+          Name cannot be Bob.
+        </div>
+    </div> -->
 
     <ion-button [disabled]="shareForm.invalid" expand="block" type="submit" (click)="shareList()">Share</ion-button>
     <ion-button  expand="block" color="tertiary" (click)="cancle()">Cancle</ion-button>
