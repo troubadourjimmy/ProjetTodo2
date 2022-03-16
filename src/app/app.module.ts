@@ -16,13 +16,14 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 import { environment } from 'src/environments/environment.prod';
 import { AngularFireModule } from '@angular/fire/compat';
 import { ShareComponent } from './modals/share/share.component';
+import { ForbiddenUserDirective, forbiddenUserValidator } from './directives/forbidden-user.directive';
 
 @NgModule({
-  declarations: [AppComponent,CreateTodoComponent,ModifiTodoComponent,ShareComponent],
+  declarations: [AppComponent,CreateTodoComponent,ModifiTodoComponent,ShareComponent, ForbiddenUserDirective],
   entryComponents: [],
   imports: [BrowserModule, 
             IonicModule.forRoot(), 
-            AppRoutingModule,ReactiveFormsModule,  FormsModule,
+            AppRoutingModule,ReactiveFormsModule, FormsModule,
             provideFirebaseApp(() => initializeApp(environment.firebase)), 
             provideAuth(() => getAuth()), 
             provideFirestore(() => getFirestore()), 

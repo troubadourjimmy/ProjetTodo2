@@ -19,8 +19,30 @@
   <form [formGroup]="shareForm">
     <ion-item>
       <ion-label position = "stacked" style="font-size: 25px;">Email:</ion-label>
-      <ion-input formControlName = "email" placeholder="Enter the email of the user to share"></ion-input>
+      <ion-input formControlName = "email" 
+        placeholder="Enter the email of the user to share"
+        required minlength="3" appForbiddenName="1234567"
+        [(ngModel)]="inputEmail">
+      </ion-input>
+      <ion-text  color = "danger" *ngIf="inputEmail =='111'">
+        can't 
+      </ion-text>
     </ion-item>
+    <div *ngIf="shareForm.invalid && (shareForm.dirty || shareForm.touched)"
+    class="alert">
+
+    <div *ngIf="shareForm.errors?.['required']">
+      Name is required.
+    </div>
+    <div *ngIf="shareForm.errors?.['minlength']">
+      Name must be at least 4 characters long.
+    </div>
+    <div *ngIf="shareForm.errors?.['forbiddenName']">
+      Name cannot be Bob.
+    </div>
+
+</div>
+
     <ion-button [disabled]="shareForm.invalid" expand="block" type="submit" (click)="shareList()">Share</ion-button>
     <ion-button  expand="block" color="tertiary" (click)="cancle()">Cancle</ion-button>
   </form>

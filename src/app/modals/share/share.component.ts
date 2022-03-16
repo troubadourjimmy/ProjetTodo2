@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { stringify } from 'querystring';
+import { forbiddenUserValidator } from 'src/app/directives/forbidden-user.directive';
 import { ListService } from 'src/app/services/list.service';
 
 @Component({
@@ -11,21 +12,29 @@ import { ListService } from 'src/app/services/list.service';
 })
 export class ShareComponent implements OnInit {
   @Input() listId:string;
+  //@Input() userEmail:string;
+  userEmail:string = '142857';
   shareForm: FormGroup;
+  inputEmail:string;
   //value bind avec ion-select authorization
   auth:string;
   constructor(private fb: FormBuilder,
     private listService: ListService,
     private modalContrl:ModalController) {
       this.shareForm = this.fb.group({
-      email: ['',[Validators.required,Validators.minLength(5)]],
-       
-      
-      
+      email: [this.inputEmail,[Validators.required,
+                  Validators.minLength(5),
+                  forbiddenUserValidator(/1234567/i)
+                ]],
+                  
+     
   });
 }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.userEmail);
+    console.log(this.listId)
+  }
 
   shareList()
   {

@@ -41,7 +41,7 @@ export class ListDetailsPage implements OnInit {
     const auth = getAuth();
     const user = auth.currentUser;
     this.userEmail = user.email;
-
+    console.log(this.userEmail);
 
   }
 
