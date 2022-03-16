@@ -19,19 +19,25 @@
   <form [formGroup]="shareForm">
     <ion-item>
       <ion-label position = "stacked" style="font-size: 25px;">Email:</ion-label>
+
       <ion-input formControlName = "email" 
         placeholder="Enter the email of the user to share"
-        required minlength="3" appForbiddenUser="{{userEmail}}"
-        [(ngModel)]="inputEmail">
+        required minlength="3" appForbiddenUser="{{userEmail}}">
       </ion-input>
-      <ion-text  color = "danger" *ngIf="inputEmail == userEmail">
+
+      <ion-text  color = "danger" *ngIf="this.shareForm.get('email').value == userEmail">
         can't share the liste to yourself
       </ion-text>
+
+      <ion-text  color = "danger" *ngIf="!this.shareForm.get('email').value || !this.shareForm.get('email').value.trim().length">
+        at least 5 caractere
+      </ion-text>
+      
     </ion-item>
 
-    <ion-text *ngIf="shareForm.errors?.['required']">
+    <!-- <ion-text *ngIf="name.errors?.['required']">
       Name is required.
-    </ion-text>
+    </ion-text> -->
    
     <!-- <div *ngIf="shareForm.invalid && (shareForm.dirty || shareForm.touched)"
     class="alert">

@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { Observable } from 'rxjs';
 import { ModifiTodoComponent } from 'src/app/modals/modifi-todo/modifi-todo.component';
+import { List } from 'src/app/models/list';
 import { Todo } from 'src/app/models/todo';
 import { ListService } from 'src/app/services/list.service';
+import { getAuth } from "firebase/auth";
 
 @Component({
   selector: 'app-todo-details',
@@ -11,7 +14,8 @@ import { ListService } from 'src/app/services/list.service';
   styleUrls: ['./todo-details.page.scss'],
 })
 export class TodoDetailsPage implements OnInit {
-  
+  List$: Observable<List>;
+  userEmail:string;
   //todo:Todo;
   todo:any;
   todoid:string;
@@ -29,6 +33,10 @@ export class TodoDetailsPage implements OnInit {
     this.todo=this.listeService.getOneTodo(listId,todoId);
     this.todoid = todoId;
     this.listid = listId;
+    this.List$ = this.listeService.getOneList(listId);
+    const auth = getAuth();
+    const user = auth.currentUser;
+    this.userEmail =user.email;
 
   }
 

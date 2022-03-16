@@ -13,9 +13,10 @@ import { ListService } from 'src/app/services/list.service';
 export class ModifiTodoComponent implements OnInit {
   @Input() listId:string
   @Input() todoId:string
-  todo:Todo;
+  
   todoName:string;
   description:string;
+  done:boolean;
 
   ModiTodoForm: FormGroup;
   constructor(private fb:FormBuilder,
@@ -28,6 +29,7 @@ export class ModifiTodoComponent implements OnInit {
     console.log(this.todoName);
     
     console.log(this.todoId);
+  
     //afficher le todo detaille pour modifier
     this.ModiTodoForm = this.fb.group({   
         name: [,[Validators.required,Validators.minLength(3)]],
@@ -56,5 +58,10 @@ export class ModifiTodoComponent implements OnInit {
   cancle()
   {
     this.modalContrl.dismiss();
+  }
+
+  ModifierTodoDone()
+  {
+      this.listeService.modifierTodoDone(this.listId,this.todoId,this.done);
   }
 }

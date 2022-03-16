@@ -8,7 +8,8 @@
 //   imports: [
 //     CommonModule,
 //     FormsModule,
-//     IonicModule
+//     IonicModule,
+//     ReactiveFormsModule
 //   ],
 //   declarations: [ShareComponent]
 // })
