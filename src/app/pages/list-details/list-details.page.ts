@@ -77,11 +77,15 @@ export class ListDetailsPage implements OnInit {
     
   }
 
+  //
   async shareList() {
     const modal = await this.modalCtrl.create({
         component:ShareComponent,
         componentProps: {
-          'listId' : this.listId
+          //transmettre this.listId a shareList modal
+          'listId' : this.listId,
+          //transmettre this.userEmail a shareList modal
+          'userEmail':this.userEmail
         }
     });
 

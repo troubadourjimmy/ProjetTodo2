@@ -7,10 +7,10 @@ import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator, ValidatorF
 })
  
 export class ForbiddenUserDirective implements Validator {
-  @Input('appForbiddenName') forbiddenName = '';
+  @Input('appForbiddenUser') forbiddenUser = '';
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.forbiddenName ? forbiddenUserValidator(new RegExp(this.forbiddenName, 'i'))(control)
+    return this.forbiddenUser ? forbiddenUserValidator(new RegExp(this.forbiddenUser, 'i'))(control)
                               : null;
   }
 }

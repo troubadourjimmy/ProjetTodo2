@@ -21,7 +21,7 @@
       <ion-label position = "stacked" style="font-size: 25px;">Email:</ion-label>
       <ion-input formControlName = "email" 
         placeholder="Enter the email of the user to share"
-        required minlength="3" appForbiddenName="1234567"
+        required minlength="3" appForbiddenUser="{{userEmail}}"
         [(ngModel)]="inputEmail">
       </ion-input>
       <ion-text  color = "danger" *ngIf="inputEmail =='111'">

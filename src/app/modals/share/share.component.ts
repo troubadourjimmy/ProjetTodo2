@@ -12,8 +12,8 @@ import { ListService } from 'src/app/services/list.service';
 })
 export class ShareComponent implements OnInit {
   @Input() listId:string;
-  //@Input() userEmail:string;
-  userEmail:string = '142857';
+  @Input() userEmail:string;
+  //userEmail:string = '142857';
   shareForm: FormGroup;
   inputEmail:string;
   //value bind avec ion-select authorization
