@@ -17,9 +17,10 @@ import { environment } from 'src/environments/environment.prod';
 import { AngularFireModule } from '@angular/fire/compat';
 import { ShareComponent } from './modals/share/share.component';
 import { ForbiddenUserDirective, forbiddenUserValidator } from './directives/forbidden-user.directive';
+import { ModifierListComponent } from './modals/modifier-list/modifier-list.component';
 
 @NgModule({
-  declarations: [AppComponent,CreateTodoComponent,ModifiTodoComponent,ShareComponent, ForbiddenUserDirective],
+  declarations: [AppComponent,CreateTodoComponent,ModifiTodoComponent,ShareComponent, ForbiddenUserDirective,ModifierListComponent],
   entryComponents: [],
   imports: [BrowserModule, 
             IonicModule.forRoot(), 

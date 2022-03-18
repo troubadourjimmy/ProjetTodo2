@@ -8,6 +8,7 @@ import { ListService } from 'src/app/services/list.service';
 import { EMPTY, Observable } from 'rxjs';
 import { ShareComponent } from 'src/app/modals/share/share.component';
 import { getAuth } from "firebase/auth";
+import { ModifierListComponent } from 'src/app/modals/modifier-list/modifier-list.component';
 
 @Component({
   selector: 'app-list-details',
@@ -91,6 +92,21 @@ export class ListDetailsPage implements OnInit {
 
     await modal.present();
     
+  }
+
+
+  async modifierList()
+  {
+    const modal = await this.modalCtrl.create({
+      component:ModifierListComponent,
+      componentProps: {
+        'listId':this.listId,
+      
+      }
+  });
+
+  await modal.present();
+
   }
 
   

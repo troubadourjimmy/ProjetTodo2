@@ -173,14 +173,21 @@ export class ListService {
   {
 
     const doc = Firestore.doc(this.firestore, `todoLists/${ListId}/todos/${todoId}`) as Firestore.DocumentReference<Todo>;
-    Firestore.updateDoc(doc,{name:todoName,description:TodoDescip});
+    await Firestore.updateDoc(doc,{name:todoName,description:TodoDescip});
+  }
+
+  //modifier le ListName
+  async modifierList(ListId:string, ListName:string)
+  {
+    const doc = Firestore.doc(this.firestore, `todoLists/${ListId}`) as Firestore.DocumentReference<List>;
+    await Firestore.updateDoc(doc,{name:ListName});
   }
 
   // modifier le todo.done pour le checkbox
   async modifierTodoDone(ListId:string, todoId:string,TodoDone:boolean)
   {
     const doc = Firestore.doc(this.firestore, `todoLists/${ListId}/todos/${todoId}`) as Firestore.DocumentReference<Todo>;
-    Firestore.updateDoc(doc,{done:TodoDone});
+    await Firestore.updateDoc(doc,{done:TodoDone});
   }
 
  //ajouter l'email to shareRead dans firestore

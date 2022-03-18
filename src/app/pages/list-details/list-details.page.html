@@ -29,6 +29,7 @@
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
+    <ion-button *ngIf="(List$ | async)?.owner==userEmail || (List$ | async)?.canWrite.indexOf(userEmail)!=-1 "  expand="block" (click) = "modifierList()"  >Modification</ion-button>
 
     <br/>
     <div *ngIf="(List$ | async)?.owner==userEmail; then thenBlock"></div>

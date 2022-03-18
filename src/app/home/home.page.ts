@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { getAuth } from "firebase/auth";
 import { EMPTY, Observable } from 'rxjs';
 import { List } from '../models/list';
+import { ModifierListComponent } from '../modals/modifier-list/modifier-list.component';
 
 
 @Component({
@@ -56,6 +57,8 @@ export class HomePage implements OnInit {
     await modal.present();
     //this.Lists = this.listService.getLists();
   }
+
+ 
 
   async signout()
   {
