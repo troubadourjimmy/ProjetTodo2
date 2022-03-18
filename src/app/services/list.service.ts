@@ -4,13 +4,14 @@ import { element } from 'protractor';
 import { List } from '../models/list';
 import { Todo } from '../models/todo';
 import * as Firestore from '@angular/fire/firestore'
-import { combineLatest, Observable } from 'rxjs';
+import { async, combineLatest, Observable } from 'rxjs';
 import { TodoDetailsPageRoutingModule } from '../pages/todo-details/todo-details-routing.module';
 import { map, switchMap } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { doc, deleteDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { AuthentificationService } from './authentification.service';
 import { getAuth } from "firebase/auth";
+import { ToastController } from '@ionic/angular';
 
 
 @Injectable({
@@ -21,6 +22,7 @@ export class ListService {
   Lists$:Firestore.CollectionReference<List>;
   Lists:List[];
   ListCollection: AngularFirestoreCollection<List>;
+  canRead:string[];
   
   
   public lists: Observable<List[]>;
@@ -28,6 +30,7 @@ export class ListService {
   constructor(private firestore:Firestore.Firestore,
               private afs:AngularFirestore,
               private authService: AuthentificationService
+              
                      ) {
       //this.Lists=[];
       this.Lists$ = Firestore.collection(firestore,'todoLists') as Firestore.CollectionReference<List>;
@@ -201,12 +204,10 @@ export class ListService {
  }
 
  ////ajouter l'email to shareWrite dans firestore
- async shareWriteList(ListId:String,email:string)
+ async shareWriteList(ListId:string,email:string)
  {
-  
- 
-   const list = Firestore.doc(this.firestore,`todoLists/${ListId}`) as Firestore.DocumentReference<List>;
-   await updateDoc(list,{canWrite:arrayUnion(email)});  
+    const list = Firestore.doc(this.firestore,`todoLists/${ListId}`) as Firestore.DocumentReference<List>;
+     await updateDoc(list,{canWrite:arrayUnion(email)});    
  }
 
  async deleteReadUser(ListId:String,email:string)
