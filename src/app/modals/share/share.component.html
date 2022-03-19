@@ -26,11 +26,11 @@
       </ion-input>
 
       <ion-text  color = "danger" *ngIf="this.shareForm.get('email').value == userEmail">
-        can't share the liste to yourself
+        You can't share the liste to yourself
       </ion-text>
 
       <ion-text  color = "danger" *ngIf="!this.shareForm.get('email').value || !this.shareForm.get('email').value.trim().length">
-        at least 5 caractere
+        must be a email
       </ion-text>
       
     </ion-item>

@@ -43,38 +43,101 @@ export class ShareComponent implements OnInit {
     console.log(this.listId)
   }
 
-  shareList()
+  async shareList()
   {
+      //si on choisir partager the read authorization a utilsateur
       if(this.auth=="canRead")
-      {
-        this.listService.shareReadList(this.listId, this.shareForm.get("email").value);
-      }
-      
-      else if(this.auth=="canWrite")
       {
           this.listService.getOneList(this.listId).subscribe(async (data:any)=>{
           this.canRead= data.canRead;
-          if( this.canRead.indexOf(this.shareForm.get('email').value)!=-1){
+          this.canWrite=data.canWrite;
+          if( this.canWrite.indexOf(this.shareForm.get('email').value)!=-1){
       
             const toast = this.toastCtrl.create({
-              message: 'this list is alreal in the canRead list of the user '+this.shareForm.get('email').value,
+              message: 'this list is already in the canWrite list of the user '+this.shareForm.get('email').value,
               duration: 5000,
               position: 'middle',
               color:'danger'
             });
             (await toast).present();
-            //await this.modalContrl.dismiss();
              
-          }else{
-            this.listService.shareWriteList(this.listId, this.shareForm.get("email").value);
-            //await this.modalContrl.dismiss();
+             
+          }
+          else if( this.canRead.indexOf(this.shareForm.get('email').value)!=-1){
+      
+            const toast = this.toastCtrl.create({
+              message: 'you have already shared the read authorization to the user '+this.shareForm.get('email').value,
+              duration: 5000,
+              position: 'middle',
+              color:'danger'
+            });
+            (await toast).present();
+           
+             
+          }
+          
+          
+          else{
+            this.listService.shareReadList(this.listId, this.shareForm.get("email").value);
+            this.modalContrl.dismiss();
+            location.reload();
              }   
           });
-        //this.listService.shareWriteList(this.listId, this.shareForm.get("email").value);
+      
+        
       }
       
-      this.modalContrl.dismiss();
+      //si on choisir partager le write authorization a utilsateur
+      else if(this.auth=="canWrite")
+      {
+          this.listService.getOneList(this.listId).subscribe(async (data:any)=>{
+          this.canRead= data.canRead;
+          this.canWrite=data.canWrite;
+          if( this.canRead.indexOf(this.shareForm.get('email').value)!=-1){
+      
+            const toast = this.toastCtrl.create({
+              message: 'this list is already in the canRead list of the user '+this.shareForm.get('email').value,
+              duration: 5000,
+              position: 'middle',
+              color:'danger'
+            });
+            (await toast).present();
+             
+             
+          }
+          else if( this.canWrite.indexOf(this.shareForm.get('email').value)!=-1){
+      
+            const toast = this.toastCtrl.create({
+              message: 'you have already shared the write authorization to the user '+this.shareForm.get('email').value,
+              duration: 5000,
+              position: 'middle',
+              color:'danger'
+            });
+            (await toast).present();   
+          }
+          
+          else{
+            this.listService.shareWriteList(this.listId, this.shareForm.get("email").value);
+            this.modalContrl.dismiss();
+            location.reload();
+          }   
+        });
+      }
+      //si on chosit rien
+      else{
+        const toast = this.toastCtrl.create({
+          message: 'You need to choose a authorization to share',
+          duration: 5000,
+          position: 'middle',
+          color:'danger'
+        });
+        (await toast).present();   
+
+      }
+       
   }
+
+
 
   cancle()
   {
@@ -86,5 +149,8 @@ export class ShareComponent implements OnInit {
   {
     console.log(this.auth);
   }
+
+
+   
 
 }

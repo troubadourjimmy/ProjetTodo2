@@ -43,11 +43,12 @@ export class ListDetailsPage implements OnInit {
     const user = auth.currentUser;
     this.userEmail = user.email;
     console.log(this.userEmail);
+    
 
   }
 
   
-
+ 
   // deleteTodo(index) {
   //   this.listeService.deleteTodo(this.list.item,index);
   // }
@@ -90,7 +91,7 @@ export class ListDetailsPage implements OnInit {
         }
     });
 
-    await modal.present();
+    return await modal.present();
     
   }
 
