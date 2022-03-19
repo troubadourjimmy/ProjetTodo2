@@ -18,11 +18,12 @@ export class RegisterPage implements OnInit {
               private route:Router) {
 
     this.registerForm = this.fb.group({
-    email: ['',[Validators.required,Validators.minLength(5)]],
-    password: ['',[Validators.required,Validators.minLength(7)]]
-    //repassword: ['',[Validators.required,Validators.minLength(7)]]
+    email: ['',[Validators.required,Validators.minLength(5),Validators.email]],
+    password: ['',[Validators.required,Validators.minLength(6)]],
+    repassword: ['',[Validators.required,Validators.minLength(7)]]
     });
   }
+  
   ngOnInit() {}
 
   async signup() {

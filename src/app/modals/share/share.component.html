@@ -29,8 +29,11 @@
         You can't share the liste to yourself
       </ion-text>
 
-      <ion-text  color = "danger" *ngIf="!this.shareForm.get('email').value || !this.shareForm.get('email').value.trim().length">
-        must be a email
+      <ion-text  color = "danger" *ngIf="!this.shareForm.get('email').value">
+        Email must be required
+      </ion-text>
+      <ion-text color = "danger" *ngIf="this.shareForm.get('email').errors?.email">
+        Email address is invalid
       </ion-text>
       
     </ion-item>

@@ -33,7 +33,7 @@ export class ShareComponent implements OnInit {
       this.shareForm = new FormGroup({
         email: new FormControl('', [Validators.required,
           Validators.minLength(5),
-          forbiddenUserValidator(/123/i)
+          forbiddenUserValidator(/123/i),Validators.email
         ])
       });              
     }
