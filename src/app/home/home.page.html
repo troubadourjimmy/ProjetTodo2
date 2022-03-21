@@ -19,7 +19,11 @@
  
  
 <ion-content>
-  
+  <ion-searchbar enterkeyhint="Search" placeholder="Search todo"
+   (ionInput)="search($event)"
+  >
+  </ion-searchbar>
+  <br/>
   <ion-list class = "Owner"> 
     <ion-label color="primary" style="font-size:17px">Owner's Lists</ion-label>
     <ion-item-sliding  *ngFor="let list of OwnerLists$ | async;">
@@ -64,6 +68,15 @@
         <ion-item-option (click) = "delete(list?.id)"  color = "danger">delete</ion-item-option>
       </ion-item-options> -->
     </ion-item-sliding>
+  </ion-list>
+
+  <!-- //////////////////////////////// -->
+  <ion-list>
+    <ion-item *ngFor="let user of resultArr">
+      <ion-label>
+        {{user.name}}
+      </ion-label>
+    </ion-item>
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">

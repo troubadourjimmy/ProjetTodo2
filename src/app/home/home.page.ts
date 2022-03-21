@@ -8,6 +8,9 @@ import { getAuth } from "firebase/auth";
 import { EMPTY, Observable } from 'rxjs';
 import { List } from '../models/list';
 import { ModifierListComponent } from '../modals/modifier-list/modifier-list.component';
+import { first } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Todo } from '../models/todo';
 
 
 @Component({
@@ -20,19 +23,25 @@ export class HomePage implements OnInit {
   OwnerLists$:Observable<List[]>= EMPTY;
   ReadLists$:Observable<List[]>= EMPTY;
   WriteLists$:Observable<List[]>= EMPTY;
+  search$:Observable<List[]> =EMPTY;
   Lists:any;
-  userEmail:string
+  userEmail:string;
+  /////////////////
+  sampleArr =[];
+  resultArr=[];
    
   constructor(public listService:ListService, 
               public modalCtrl:ModalController,
               private authen:AuthentificationService,
               private toastCtrl:ToastController,
-              private route:Router) {}
+              private route:Router,
+              private afs:AngularFirestore) {}
   
   ngOnInit(): void {
      this.OwnerLists$ = this.listService.getOwnerLists();
      this.ReadLists$ = this.listService.getReadLists();
      this.WriteLists$ = this.listService.getWriteLists();
+     //console.log(this.keyValue)
      
      ////Obtenir les info d'utilisateur actuellement connecté
      const auth = getAuth();
@@ -82,5 +91,55 @@ export class HomePage implements OnInit {
     }
    
   }
+
+  // search(event):Observable<List[]>{
+  //    let searchKey:string = event.target.value;
+  //    //toUpperCase():Convertir tous les caractères en majuscules
+  //    //let firstLetter = searchKey.toUpperCase();
+  //    const search$ =this.afs.collection<List>('todoLists',ref => ref.where('name','==',searchKey )).valueChanges({idField:'id'});
+  //    return search$;
+  // }
+     //console.log(firstLetter);
+  ///////
+  search(event){
+     let searchKey:string = event.target.value;
+     //toUpperCase():Convertir tous les caractères en majuscules
+     let firstLetter = searchKey.toUpperCase();
+     console.log(searchKey)
+     if(searchKey.length==0)
+     {
+        this.sampleArr=[];
+        this.resultArr=[];
+        
+     }
+
+    //  const owner$ = this.afs.collection<List>('todoLists',ref => ref.where('owner','==', user.email)).valueChanges({idField:'id'});
+     if(this.sampleArr.length ==0)
+     {
+       
+       //where('SearchIndex', '==',firstLetter))
+      //  this.afs.collection<List>('todoLists',ref=>ref.where('name', '==',firstLetter)).snapshotChanges()
+       this.afs.collection<List>('todoLists',ref=>ref.where('name', '==',searchKey)).snapshotChanges()
+        .subscribe(data =>{
+          data.forEach(childData=>{
+            this.sampleArr.push(childData.payload.doc.data()
+            )
+          })
+        })
+     }
+     else{
+       this.resultArr=[];
+       this.sampleArr.forEach(val=>{
+         let name:string=val['name'];
+         if(name.startsWith(searchKey)){
+          if(true){
+            this.resultArr.push(val);
+          }
+         }
+       })
+     }
+  }
+
+   
   
-}
+ }
