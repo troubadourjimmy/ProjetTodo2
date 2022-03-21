@@ -117,9 +117,7 @@ export class HomePage implements OnInit {
      if(this.sampleArr.length ==0)
      {
        
-       //where('SearchIndex', '==',firstLetter))
-      //  this.afs.collection<List>('todoLists',ref=>ref.where('name', '==',firstLetter)).snapshotChanges()
-       this.afs.collection<List>('todoLists',ref=>ref.where('name', '==',searchKey)).snapshotChanges()
+       this.afs.collection<List>('todoLists',ref=>(ref.where('name', '>=',searchKey))&&ref.where('owner', '==',this.userEmail)).snapshotChanges()
         .subscribe(data =>{
           data.forEach(childData=>{
             this.sampleArr.push(childData.payload.doc.data()
@@ -132,6 +130,7 @@ export class HomePage implements OnInit {
        this.sampleArr.forEach(val=>{
          let name:string=val['name'];
          if(name.startsWith(searchKey)){
+         
           if(true){
             this.resultArr.push(val);
           }

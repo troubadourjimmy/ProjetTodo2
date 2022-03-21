@@ -70,11 +70,11 @@
     </ion-item-sliding>
   </ion-list>
 
-  <!-- //////////////////////////////// -->
+  <!-- afficher les search List -->
   <ion-list>
-    <ion-item *ngFor="let user of resultArr">
+    <ion-item *ngFor="let list of resultArr">
       <ion-label>
-        {{user.name}}
+        {{list.name}}
       </ion-label>
     </ion-item>
   </ion-list>
