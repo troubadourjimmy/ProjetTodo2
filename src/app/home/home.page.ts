@@ -92,15 +92,7 @@ export class HomePage implements OnInit {
    
   }
 
-  // search(event):Observable<List[]>{
-  //    let searchKey:string = event.target.value;
-  //    //toUpperCase():Convertir tous les caractères en majuscules
-  //    //let firstLetter = searchKey.toUpperCase();
-  //    const search$ =this.afs.collection<List>('todoLists',ref => ref.where('name','==',searchKey )).valueChanges({idField:'id'});
-  //    return search$;
-  // }
-     //console.log(firstLetter);
-  ///////
+
   search(event){
      let searchKey:string = event.target.value;
      //toUpperCase():Convertir tous les caractères en majuscules
@@ -113,7 +105,7 @@ export class HomePage implements OnInit {
         
      }
 
-    //  const owner$ = this.afs.collection<List>('todoLists',ref => ref.where('owner','==', user.email)).valueChanges({idField:'id'});
+    
      if(this.sampleArr.length ==0)
      {
        
@@ -129,11 +121,8 @@ export class HomePage implements OnInit {
        this.resultArr=[];
        this.sampleArr.forEach(val=>{
          let name:string=val['name'];
-         if(name.startsWith(searchKey)){
-         
-          if(true){
+         if(name.indexOf(searchKey)>=0){
             this.resultArr.push(val);
-          }
          }
        })
      }
