@@ -73,7 +73,7 @@
   <!-- afficher les search List -->
   <ion-list>
     <ion-item *ngFor="let list of resultArr">
-      <ion-label>
+      <ion-label [routerLink]="['/list-details/'+ list.id]" routerLinkActive="active">
         {{list.name}}
       </ion-label>
     </ion-item>

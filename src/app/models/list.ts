@@ -13,5 +13,6 @@ export class List {
         this.todos =[];
         this.canRead=[];
         this.canWrite =[];
+        this.id = null;
     }
 }

@@ -12,6 +12,8 @@ import { doc, deleteDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/fir
 import { AuthentificationService } from './authentification.service';
 import { getAuth } from "firebase/auth";
 import { ToastController } from '@ionic/angular';
+import { stringify } from 'querystring';
+
 
 
 @Injectable({
@@ -23,6 +25,9 @@ export class ListService {
   Lists:List[];
   ListCollection: AngularFirestoreCollection<List>;
   canRead:string[];
+  addlist:any;
+  id:string;
+   
   
   
   public lists: Observable<List[]>;
@@ -34,7 +39,7 @@ export class ListService {
                      ) {
       //this.Lists=[];
       this.Lists$ = Firestore.collection(firestore,'todoLists') as Firestore.CollectionReference<List>;
-      //this.ListCollection = afs.collection<List>('todoLists')
+      this.ListCollection = afs.collection<List>('todoLists')
       
   }
 
@@ -109,13 +114,30 @@ export class ListService {
   //Au lieu de cela, on doit utiliser des objets JavaScript purs à enregistrer dans la base de données Firestore.
   // si on fait return Firestore.addDoc(this.Lists$,list),il y a une error:invalid data. Data must be an object, but it was: a custom User object;
   //Object.assign() convertir la liste en objet
-  async addList(list:List):Promise<Firestore.DocumentReference<List>>
+  // async addList(list:List):Promise<Firestore.DocumentReference<List>>
+  // {
+     
+  //    const auth = getAuth();
+  //    const user = auth.currentUser;
+  //    list.owner = user.email;
+  //    return Firestore.addDoc(this.Lists$,Object.assign({}, list));
+  // }
+
+  async addList(list:List)
   {
+     
      const auth = getAuth();
      const user = auth.currentUser;
      list.owner = user.email;
-     return Firestore.addDoc(this.Lists$,Object.assign({}, list));
-  
+     await this.ListCollection.add({ ...list })
+     .then(function(docRef) {
+     console.log("Document written with ID: ", docRef.id);
+     Firestore.updateDoc(docRef,{id:docRef.id});  
+  })
+  .catch(function(error) {
+      console.error("Error adding document: ", error);
+     });
+     
   }
 
   
