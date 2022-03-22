@@ -1,10 +1,16 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref=""></ion-back-button>
+    </ion-buttons>
     <ion-item lines = "none">
       <ion-label style="font-weight: 800;font-size: 20px">
-        Todo:{{(todo| async)?.name}}
+        Todo Detail
       </ion-label> 
     </ion-item>
+    <ion-buttons slot="end">
+      <ion-back-button icon="home" defaultHref="/home"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

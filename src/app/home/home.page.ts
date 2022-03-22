@@ -29,6 +29,7 @@ export class HomePage implements OnInit {
   /////////////////
   sampleArr =[];
   resultArr=[];
+  //pour decider aifficher le result de search list
   searching:boolean;
   
    
@@ -107,8 +108,7 @@ export class HomePage implements OnInit {
      {
         this.searching=false;
         this.sampleArr=[];
-        this.resultArr=[];
-        
+        this.resultArr=[];   
      }
 
     
@@ -133,7 +133,4 @@ export class HomePage implements OnInit {
        })
      }
   }
-
-   
-  
  }
