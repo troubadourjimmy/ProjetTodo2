@@ -19,27 +19,11 @@
  
  
 <ion-content>
-  <ion-searchbar enterkeyhint="Search" placeholder="Search todo"
-   (ionInput)="search($event)"
-
-   (ionBlur)="searching = false;"
-  >
-  </ion-searchbar>
+   
+    <ion-searchbar enterkeyhint="Search" placeholder="Search List" 
+    (ionInput)="search($event)" >
+    </ion-searchbar>
   <br/>
-
-   <!-- afficher les search List -->
-   <!-- <ion-list *ngIf="searching">
-    <ion-item *ngFor="let list of resultArr" >
-      <ion-label [routerLink]="['/list-details/'+ list.id]" routerLinkActive="active">
-        <ion-item-sliding>
-          {{list.name}}
-          <ion-item-options side="end">
-            <ion-item-option [routerLink]="['/list-details/'+ list.id]" routerLinkActive="active">delete</ion-item-option>
-          </ion-item-options>
-        </ion-item-sliding>
-      </ion-label>
-    </ion-item>
-  </ion-list> -->
 
   <ion-list *ngIf="searching"> 
     <ion-label color="primary" style="font-size:17px">Serach Result</ion-label>

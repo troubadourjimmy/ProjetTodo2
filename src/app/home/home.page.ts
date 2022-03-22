@@ -30,6 +30,7 @@ export class HomePage implements OnInit {
   sampleArr =[];
   resultArr=[];
   searching:boolean;
+  
    
   constructor(public listService:ListService, 
               public modalCtrl:ModalController,
@@ -95,13 +96,16 @@ export class HomePage implements OnInit {
 
 
   search(event){
-     this.searching=true;
-     let searchKey:string = event.target.value;
+    
+    this.searching=true;
+    let searchKey:string = event.target.value; 
+    
      //toUpperCase():Convertir tous les caractères en majuscules
-     let firstLetter = searchKey.toUpperCase();
+     //let firstLetter = searchKey.toUpperCase();
      console.log(searchKey)
      if(searchKey.length==0)
      {
+        this.searching=false;
         this.sampleArr=[];
         this.resultArr=[];
         
