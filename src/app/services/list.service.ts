@@ -114,7 +114,7 @@ export class ListService {
   //Au lieu de cela, on doit utiliser des objets JavaScript purs à enregistrer dans la base de données Firestore.
   // si on fait return Firestore.addDoc(this.Lists$,list),il y a une error:invalid data. Data must be an object, but it was: a custom User object;
   //Object.assign() convertir la liste en objet
-  // async addList(list:List):Promise<Firestore.DocumentReference<List>>
+  // async addList2(list:List):Promise<Firestore.DocumentReference<List>>
   // {
      
   //    const auth = getAuth();
@@ -132,6 +132,7 @@ export class ListService {
      await this.ListCollection.add({ ...list })
      .then(function(docRef) {
      console.log("Document written with ID: ", docRef.id);
+     //ajouter le meme id dans le  doc list, pour la fonction searchList
      Firestore.updateDoc(docRef,{id:docRef.id});  
   })
   .catch(function(error) {
@@ -147,7 +148,7 @@ export class ListService {
      
   //  }
 
-  //  async deleteList(ListId:String){
+  //  async deleteList(ListId:string){
   //   //this.afs.doc
   //   const doc = Firestore.doc(this.firestore, `todoLists/${ListId}`) as Firestore.DocumentReference<List>;
   //   return Firestore.deleteDoc(doc);
@@ -233,10 +234,8 @@ export class ListService {
   }
 
  //ajouter l'email to shareRead dans firestore
-  async shareReadList(ListId:String,email:string)
+  async shareReadList(ListId:string,email:string)
  {
-  
- 
    const list = Firestore.doc(this.firestore,`todoLists/${ListId}`) as Firestore.DocumentReference<List>;
    await updateDoc(list,{canRead:arrayUnion(email)});
     
@@ -249,13 +248,13 @@ export class ListService {
      await updateDoc(list,{canWrite:arrayUnion(email)});    
  }
 
- async deleteReadUser(ListId:String,email:string)
+ async deleteReadUser(ListId:string,email:string)
  {
   const list = Firestore.doc(this.firestore,`todoLists/${ListId}`) as Firestore.DocumentReference<List>;
   await updateDoc(list,{canRead:arrayRemove(email)}); 
  }
 
- async deleteWriteUser(ListId:String,email:string)
+ async deleteWriteUser(ListId:string,email:string)
  {
   const list = Firestore.doc(this.firestore,`todoLists/${ListId}`) as Firestore.DocumentReference<List>;
   await updateDoc(list,{canWrite:arrayRemove(email)}); 
