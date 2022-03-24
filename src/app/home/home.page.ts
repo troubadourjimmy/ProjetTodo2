@@ -53,7 +53,7 @@ export class HomePage implements OnInit {
   }
 
    
-  delete(id:String){
+  delete(id:string){
     //this.Lists.splice(index,1);
     this.listService.deleteList(id);
   }
