@@ -154,21 +154,31 @@ export class ListService {
   //   return Firestore.deleteDoc(doc);
   //  }
 
-   async deleteList(ListId: string) {
-    //supprime tous les todos de la nested collection:
-    const querySnapshotTodosDocs = this.ListCollection.doc(ListId).collection("todos").ref.get();
-    querySnapshotTodosDocs.then(
-      async querySnapshot => {
+  //  async deleteList(ListId: string) {
+  //   //supprime tous les todos de la nested collection:
+  //   const querySnapshotTodosDocs =this.ListCollection.doc(ListId).collection("todos").ref.get();
+  //   querySnapshotTodosDocs.then(
+  //     async querySnapshot => {
        
-        const promiseDocDeleted = querySnapshot.docs.map(
-          doc => doc.ref.delete()
-        )
+  //       const promiseDocDeleted = querySnapshot.docs.map(
+  //         doc => doc.ref.delete()
+  //       )
         
-        await Promise.all(promiseDocDeleted)
-      }
-    )
-    this.ListCollection.doc(ListId).delete();
+  //       await Promise.all(promiseDocDeleted)
+  //     }
+  //   )
+  //   this.ListCollection.doc(ListId).delete();
+  // }
+
+
+  async deleteList(ListId: string) {
+    //supprime tous les todos de la nested collection:
+    const queryListSnapshot =await this.ListCollection.doc(ListId).collection("todos").ref.get();
+    await Promise.all(queryListSnapshot.docs.map(doc => doc.ref.delete()));
+     
+   return this.ListCollection.doc(ListId).delete();
   }
+
 
   //creer une nouvelle todo dans un list chosie
   // addTodo(id:string,todo:Todo) {
