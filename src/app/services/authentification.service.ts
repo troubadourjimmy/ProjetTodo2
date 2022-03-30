@@ -2,10 +2,15 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';  
 import 'firebase/auth';
 import { Router } from '@angular/router';
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth, sendPasswordResetEmail, GoogleAuthProvider } from "firebase/auth";
 import { async } from '@firebase/util';
 import { ToastController } from '@ionic/angular';
 import firebase from 'firebase/compat/app';
+import { User } from '../models/user';
+import { AngularFirestore,AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import {GoogleAuth} from '@codetrix-studio/capacitor-google-auth' 
+import { Plugins } from '@capacitor/core';
+ 
 
  
 
@@ -18,6 +23,7 @@ export class AuthentificationService {
   
   
   constructor(private fireAuthen:AngularFireAuth,
+              private afs:AngularFirestore,
               private route:Router,
               private toastCtrl:ToastController) {}
 
@@ -53,7 +59,27 @@ export class AuthentificationService {
   }
 
 
+  // //login avec google
+  // async loginGoogle()//:Promise<User>
+  // {
+  //    try{
+  //      const user = await this.fireAuthen.signInWithPopup(new GoogleAuthProvider());
+  //      return user;
+  //    }catch(error){
+  //      console.log('Error->',error);
+  //    }
 
+     
+  // }
+
+ async googleSignin() {
+    let googleUser = await GoogleAuth.signIn();
+    //let googleUser = await Plugins.GoogleAuth.signIn(null) as any;
+    const credential = firebase.auth.GoogleAuthProvider.credential(googleUser.authentication.idToken)
+    this.fireAuthen.signInWithCredential(credential);
+  }
+
+  
 
 
 
@@ -94,6 +120,8 @@ export class AuthentificationService {
     await userCred.user.sendEmailVerification();
     return userCred;
   }
+
+
 
   signout()
   {

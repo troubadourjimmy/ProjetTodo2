@@ -78,4 +78,12 @@ export class LoginPage implements OnInit {
   
   }
 
+
+  googleSignin()
+  {
+    
+    this.authen.googleSignin();
+   
+  }
+
 }

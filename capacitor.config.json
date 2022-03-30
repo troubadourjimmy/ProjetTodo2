@@ -2,5 +2,15 @@
 	"appId": "io.ionic.starter",
 	"appName": "todolist",
 	"webDir": "www",
-	"bundledWebRuntime": false
+	"bundledWebRuntime": false,
+	"plugins": {
+		"SplashScreen": {
+		  "launchShowDuration": 0
+		},
+		"GoogleAuth": {
+		  "scopes": ["profile", "email"],
+		  "serverClientId": "279134938173-cm370b3qbues67rgjlotp02gm6gtd5in.apps.googleusercontent.com",
+		  "forceCodeForRefreshToken" : true
+		}
+	  }
 }

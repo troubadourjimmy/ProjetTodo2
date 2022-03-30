@@ -134,15 +134,6 @@ export class HomePage implements OnInit {
      }
   }
 
-  deleteUserCanRead()
-  {
-
-  }
-
-  deleteUserCanWrite()
-  {
-
-  }
 
 
 
