@@ -255,7 +255,7 @@ export class ListService {
  async shareWriteList(ListId:string,email:string)
  {
     const list = Firestore.doc(this.firestore,`todoLists/${ListId}`) as Firestore.DocumentReference<List>;
-     await updateDoc(list,{canWrite:arrayUnion(email)});    
+    await updateDoc(list,{canWrite:arrayUnion(email)});    
  }
 
  async deleteReadUser(ListId:string,email:string)

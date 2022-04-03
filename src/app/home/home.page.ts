@@ -74,25 +74,34 @@ export class HomePage implements OnInit {
 
   async signout()
   {
+    
     await this.authen.signout();
     
-    const auth = getAuth();
-    const user = auth.currentUser;
-    if (user) {
-      // the User still signed in.
+    // const auth = getAuth();
+    // const user = auth.currentUser;
+    // if (user) {
+    //   // the User still signed in.
       
-    } else {//the user sign out
+    // } else {//the user sign out
       
-      const toast =await this.toastCtrl.create({
-        message: 'sign out successfully',
-        duration: 3000,
-        position: 'middle',
-        color:'light'
-      });
-      (await toast).present();
-      this.route.navigate(['login']);
-    }
-   
+    //   const toast =await this.toastCtrl.create({
+    //     message: 'sign out successfully',
+    //     duration: 3000,
+    //     position: 'middle',
+    //     color:'light'
+    //   });
+    //   (await toast).present();
+    //   this.route.navigate(['login']);
+    // }
+    
+    const toast =await this.toastCtrl.create({
+      message: 'sign out successfully',
+      duration: 3000,
+      position: 'middle',
+      color:'light'
+    });
+    (await toast).present();
+    this.route.navigate(['login']);
   }
 
 

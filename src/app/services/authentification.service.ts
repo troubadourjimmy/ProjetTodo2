@@ -10,6 +10,9 @@ import { User } from '../models/user';
 import { AngularFirestore,AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import {GoogleAuth} from '@codetrix-studio/capacitor-google-auth' 
 import { Plugins } from '@capacitor/core';
+import { from } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { signInWithPopup } from '@angular/fire/auth';
  
 
  
@@ -57,26 +60,42 @@ export class AuthentificationService {
     //console.log(userCred.user.email);
     return userCred;
   }
-
-
-  // //login avec google
-  // async loginGoogle()//:Promise<User>
-  // {
-  //    try{
-  //      const user = await this.fireAuthen.signInWithPopup(new GoogleAuthProvider());
-  //      return user;
-  //    }catch(error){
-  //      console.log('Error->',error);
-  //    }
-
      
   // }
 
- async googleSignin() {
-    let googleUser = await GoogleAuth.signIn();
-    //let googleUser = await Plugins.GoogleAuth.signIn(null) as any;
-    const credential = firebase.auth.GoogleAuthProvider.credential(googleUser.authentication.idToken)
-    this.fireAuthen.signInWithCredential(credential);
+//  async googleSignin() {
+//     let googleUser = await GoogleAuth.signIn();
+//     const credential = firebase.auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
+//     this.fireAuthen.signInWithCredential(credential);  
+//   }
+
+  // async googleSignin() {
+  //   let googleUser = await Plugins.GoogleAuth.signIn(null) as any;
+  //   const credential = firebase.auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
+  //   await this.fireAuthen.signInAndRetrieveDataWithCredential(credential);
+  // }
+
+  async googleSignin() {
+
+    const provider = new GoogleAuthProvider();
+      
+    const auth = getAuth();
+    await signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+        // ...
+      }).catch((error) => {
+
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      
+        const email = error.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+      });
+
+      this.route.navigate(['home']);
   }
 
   

@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
 
-//If we need to redirect an unauthorized user to our login page but also redirect an authorized user who has not verified their email to a different page 
+//redirect an unauthorized user to our login page but also redirect an authorized user who has not verified their email to a different page 
 const redirectUnauthorizedOrUnverifiedUser: AuthPipeGenerator = () =>
   map(user => {
     if (user) {

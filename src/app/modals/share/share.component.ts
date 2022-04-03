@@ -48,10 +48,12 @@ export class ShareComponent implements OnInit {
       //si on choisir partager the read authorization a utilsateur
       if(this.auth=="canRead")
       {
+          
           this.listService.getOneList(this.listId).subscribe(async (data:any)=>{
-          this.canRead= data.canRead;
+          this.canRead = data.canRead;
           this.canWrite=data.canWrite;
-          if( this.canWrite.indexOf(this.shareForm.get('email').value)!=-1){
+          
+          if(this.canWrite.indexOf(this.shareForm.get('email').value)!=-1){
       
             const toast = this.toastCtrl.create({
               message: 'this list is already in the canWrite list of the user '+this.shareForm.get('email').value,
@@ -63,22 +65,22 @@ export class ShareComponent implements OnInit {
              
              
           }
-          else if( this.canRead.indexOf(this.shareForm.get('email').value)!=-1){
+          else if(this.canRead.indexOf(this.shareForm.get('email').value)!=-1){
       
-            const toast = this.toastCtrl.create({
-              message: 'you have already shared the read authorization to the user '+this.shareForm.get('email').value,
-              duration: 5000,
-              position: 'middle',
-              color:'danger'
-            });
-            (await toast).present();
+            // const toast = this.toastCtrl.create({
+            //   message: 'you have already shared the read authorization to the user !!!!!!'+this.shareForm.get('email').value,
+            //   duration: 5000,
+            //   position: 'middle',
+            //   color:'danger'
+            // });
+            // (await toast).present();
            
              
           }
           
-          
           else{
-            this.listService.shareReadList(this.listId, this.shareForm.get("email").value);
+            
+            await this.listService.shareReadList(this.listId, this.shareForm.get("email").value);
             this.modalContrl.dismiss();
             location.reload();
              }   
@@ -107,17 +109,18 @@ export class ShareComponent implements OnInit {
           }
           else if( this.canWrite.indexOf(this.shareForm.get('email').value)!=-1){
       
-            const toast = this.toastCtrl.create({
-              message: 'you have already shared the write authorization to the user '+this.shareForm.get('email').value,
-              duration: 5000,
-              position: 'middle',
-              color:'danger'
-            });
-            (await toast).present();   
+            // const toast = this.toastCtrl.create({
+            //   message: 'you have already shared the write authorization to the user '+this.shareForm.get('email').value,
+            //   duration: 5000,
+            //   position: 'middle',
+            //   color:'danger'
+            // });
+            // (await toast).present();  
+            this.modalContrl.dismiss(); 
           }
           
           else{
-            this.listService.shareWriteList(this.listId, this.shareForm.get("email").value);
+            await this.listService.shareWriteList(this.listId, this.shareForm.get("email").value);
             this.modalContrl.dismiss();
             location.reload();
           }   

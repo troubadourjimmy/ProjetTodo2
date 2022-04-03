@@ -57,12 +57,12 @@ export class ListDetailsPage implements OnInit {
     this.listeService.deleteTodo(this.listId,todoId);
   }
 
-  deleteReadUser(email:string)
+  async deleteReadUser(email:string)
   {
     this.listeService.deleteReadUser(this.listId,email);
   }
 
-  deleteWriteUser(email:string)
+  async deleteWriteUser(email:string)
   {
     this.listeService.deleteWriteUser(this.listId,email);
   }

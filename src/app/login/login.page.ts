@@ -79,7 +79,7 @@ export class LoginPage implements OnInit {
   }
 
 
-  googleSignin()
+  async googleSignin()
   {
     
     this.authen.googleSignin();
