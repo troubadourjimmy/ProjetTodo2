@@ -1,0 +1,52 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref=""></ion-back-button>
+    </ion-buttons>
+    <ion-item lines = "none">
+      <ion-label style="font-weight: 800;font-size: 20px">
+        Todo Detail
+      </ion-label> 
+    </ion-item>
+    <ion-button slot="end" Href="/home" fill="clear">
+      <ion-icon name="home" color="dark" ></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="container">   
+      <ion-item>
+        <ion-label position = "stacked">Name :</ion-label>
+        <!-- <ion-text>{{todo.name}}</ion-text>  -->
+        <ion-text>{{(todo| async)?.name}}</ion-text> 
+      </ion-item>     
+
+      <ion-item>
+        <ion-label position = "stacked">Description:</ion-label>
+        <!-- <ion-text>{{todo.descrip}}</ion-text>  -->
+        <ion-text>{{(todo| async)?.description}}</ion-text>          
+      </ion-item> 
+      
+      <ion-item>
+        <ion-label position = "stacked">Have done:</ion-label>
+        <!-- <ion-checkbox checked={{todo.status}} disabled="false" [(ngModel)]="todo.status" solt="end"></ion-checkbox>   -->
+        <!-- afficher la different template depends le different Authorization -->
+        <div *ngIf="(List$ | async)?.owner==userEmail || (List$ | async)?.canWrite.indexOf(userEmail)!=-1; then checkbox1 else checkbox2;"></div>
+        <ng-template #checkbox1>
+          <ion-checkbox 
+            checked={{(todo|async)?.done}} disabled="false" [(ngModel)]="done"  (ionChange)=" ModifierTodoDone()" solt="end">
+          </ion-checkbox>
+        </ng-template>
+        
+        <ng-template #checkbox2>
+          <ion-checkbox
+            checked={{(todo|async)?.done}} disabled="true" [(ngModel)]="done"  (ionChange)=" ModifierTodoDone()" solt="end">
+          </ion-checkbox>    
+        </ng-template>    
+      </ion-item>     
+  </div>
+  
+  
+  <ion-button *ngIf="(List$ | async)?.owner==userEmail || (List$ | async)?.canWrite.indexOf(userEmail)!=-1 "  expand="block" (click) = "modifiTodo()"  >Modification</ion-button>
+</ion-content>

@@ -1,0 +1,26 @@
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-item lines = "none">
+      <ion-label style="font-weight: 800;font-size: 20px">
+         Ajouter une nouvelle todo
+      </ion-label> 
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="todoForm">
+    <ion-item>
+      <ion-label position = "stacked">Name:</ion-label>
+      <!-- formControlName = "name"，‘name’ as the same as this.fb.group({name: ['',[Validators.required,Validators.min(3)]]}) -->
+      <ion-input formControlName = "name"></ion-input>
+      <ion-label position = "stacked">Description:</ion-label>
+      <ion-input formControlName = "descrip"></ion-input>
+    </ion-item>
+    <ion-button [disabled]="todoForm.invalid" expand="block" type="submit" (click)="addTodo()">Validate</ion-button>
+    <ion-button  expand="block" color="tertiary" (click)="cancle()">Cancle</ion-button>
+  </form>
+
+
+</ion-content>

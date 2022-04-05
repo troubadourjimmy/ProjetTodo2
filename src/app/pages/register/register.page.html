@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>sign up</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content >
+  <form [formGroup]="registerForm" (ngSubmit)="signup()">
+    <ion-item lines="full">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="text" formControlName = "email" placeholder="Enter your email"></ion-input>
+      <ion-text color = "danger" *ngIf="this.registerForm.get('email').errors?.email">
+        Email address is invalid
+      </ion-text>
+    </ion-item>
+    <ion-item lines="full"> 
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" formControlName = "password" placeholder="Enter your password"></ion-input>
+      <ion-text  color = "danger" *ngIf="this.registerForm.get('password').value.trim().length <=6">
+        Password length must not be less than 6!
+      </ion-text>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label position="floating">Confirm password</ion-label>
+      <ion-input type="password" formControlName = "repassword" placeholder="Retype your password"></ion-input>
+      <ion-text  color = "danger" *ngIf="this.registerForm.get('password').value!= this.registerForm.get('repassword').value">
+        Password and retype password do not match!
+      </ion-text>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button [disabled]="registerForm.invalid" type="submit" color="" expand="block">validate</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

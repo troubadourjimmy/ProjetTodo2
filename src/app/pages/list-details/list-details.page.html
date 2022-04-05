@@ -1,0 +1,88 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" ></ion-back-button>
+    </ion-buttons>
+    <ion-item lines = "none">
+      <ion-label style="font-weight: 800;font-size: 20px">
+        List detail: {{(List$ | async)?.name}} 
+      </ion-label> 
+    </ion-item>
+    <ion-button slot="end" Href="/home" fill="clear">
+      <ion-icon name="home" color="dark" ></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<br/>
+
+<ion-content>
+  <div id="container">
+    <!-- <ion-list *ngFor="let todo of list.item; let i = index">  -->
+      <!-- *ngFor item of (items$ | async)?.someProperty -->
+    <ion-label color="primary"  style="font-size:17px">Todos</ion-label>
+    <ion-list *ngFor="let todo of (List$ | async)?.todos; let i = index"> 
+      <ion-item-sliding >
+        <div style="align-items: center; display: flex">
+            <ion-item style="width: 93%" [routerLink]="['todo-details/'+todo.id]">
+              <ion-text >{{todo.name}}</ion-text> 
+              <!-- <ion-text>{{todo.descrip}}</ion-text> -->       
+            </ion-item>
+            <ion-checkbox checked="{{todo.done}}" disabled="true" solt="end"></ion-checkbox>
+        </div>
+        <ion-item-options side="end">
+          <ion-item-option (click) = "deleteTodo(todo.id)"  color = "danger">delete</ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+    <ion-button *ngIf="(List$ | async)?.owner==userEmail || (List$ | async)?.canWrite.indexOf(userEmail)!=-1 "  expand="block" (click) = "modifierList()"  >Modification</ion-button>
+
+    <br/>
+    <div *ngIf="(List$ | async)?.owner==userEmail; then thenBlock"></div>
+    <ng-template #thenBlock>
+      <ion-label color="primary"  style="font-size:17px">Users can read this list</ion-label>
+      <ion-list *ngFor="let item of (List$ | async)?.canRead; let i = index"> 
+        <ion-item-sliding >
+          <div style="align-items: center; display: flex">
+            <ion-item style="width: 93%">
+              <ion-text >{{item}}</ion-text>    
+            </ion-item>  
+          </div>
+          <ion-item-options side="end">
+            <ion-item-option (click) = "deleteReadUser(item)" color = "danger">delete</ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    <br/>
+
+      <ion-label color="primary"  style="font-size:17px">Users can write this list</ion-label>
+      <ion-list *ngFor="let item of (List$ | async)?.canWrite; let i = index"> 
+        <ion-item-sliding >
+          <div style="align-items: center; display: flex">
+            <ion-item style="width: 93%">
+              <ion-text >{{item}}</ion-text>    
+            </ion-item>  
+          </div>
+          <ion-item-options side="end">
+            <ion-item-option (click) = "deleteWriteUser(item)" color = "danger">delete</ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+
+      <ion-fab  horizontal="start"  vertical="bottom" slot="fixed">
+        <ion-fab-button (click)="shareList()">
+          <ion-icon name = "paper-plane-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </ng-template>
+
+
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="addNewTodo()">
+          <ion-icon name = "add"></ion-icon>
+      </ion-fab-button>
+      </ion-fab>
+
+      
+  </div>
+</ion-content>
