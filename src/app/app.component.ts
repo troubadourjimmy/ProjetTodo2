@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  constructor() {
+    // this.initializeApp();
+  }
+  
+  // initializeApp() {
+  //   this.platform.ready().then(() => {
+  //     GoogleAuth.initialize()
+  //   })
+  // }
 }

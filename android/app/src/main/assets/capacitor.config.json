@@ -15,5 +15,6 @@
 			"serverClientId": "279134938173-cm370b3qbues67rgjlotp02gm6gtd5in.apps.googleusercontent.com",
 			"forceCodeForRefreshToken": true
 		}
-	}
+	},
+	"cordova": {}
 }
